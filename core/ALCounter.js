@@ -39,13 +39,27 @@ var ALCounter = ( function( domain ) {
 							 && typeof this.queue[ templateUrl ] === "undefined" ) {
 
 							console.log( "Setting new template loading to queue", templateUrl );
-							this,queue[ templateUrl ] = new HTTPRequest( null, false );
+							var that = this;
+							var request = new HTTPRequest( function( wrapper ) {
+
+								console.log( wrapper.httpRequest.responseText );
+								delete that.queue[ templateUrl ];
+
+							}, false );
+							request.doGet( templateUrl );
+							this.queue[ templateUrl ] = request;
 
 						}
 		
 					}
 		
 				}
+
+			},
+			
+			getTemplate : function( type ) {
+
+				return null;
 
 			}
 			

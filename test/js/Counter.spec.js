@@ -56,10 +56,19 @@ describe("ALCounter", function() {
 
 describe("ALCounterHelper", function() {
 
-	it("loads a template for a type", function() {
-
-		windgazer.ALCounterHelper.loadTemplate("ALCounter");
-
+	it("loads a template for ALCounter type", function() {
+		runs(function() {
+			windgazer.ALCounterHelper.loadTemplate("Counter.spec");
+		});
+		
+		waitsFor(function() {
+			return windgazer.ALCounterHelper.getTemplate("Counter.spec") !== null;
+		}, "The template should be available", 500);
+		
+		runs(function() {
+			expect(windgazer.ALCounterHelper.getTemplate("Counter.spec").indexOf("div") > 0).toBe(true);
+		});
+		
 	});
 
 });
