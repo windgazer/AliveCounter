@@ -1,10 +1,13 @@
 (function() {
-	nl_windgazer_debug = true;
+	nl_windgazer_debug = typeof nl_windgazer_debug === "undefined"?false:nl_windgazer_debug;
 	nl_windgazer_console = {
 		log:function(message) {
 			//Just dumping the message into the void :)
 		},
 		warn:function(message) {
+			//Just dumping the message into the void :)
+		},
+		debug:function(message) {
 			//Just dumping the message into the void :)
 		},
 		info:function(message) {
@@ -48,12 +51,7 @@
 							sid = self.id,
 							t = i * 10;
 
-						//window.setTimeout( function(  ) { hf( lid, linfo, sid ); }, t );
-						if ( Options.isDebug() ) console.warn( lid, linfo, sid, t );
-
 						hf( lid, linfo, sid );
-
-						if ( Options.isDebug() ) Console.info(handlers[ i ], eInfo, this.id, eid, i);
 
 					}
 

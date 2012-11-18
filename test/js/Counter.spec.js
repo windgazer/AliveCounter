@@ -1,3 +1,73 @@
+
+describe("ALCounterHelper", function() {
+	
+	var t = "<div id=\"${id}\" class=\"Counter.spec\"><h3>${title}</h3><p>${value}</p></div>",
+		t1 = "<div id=\"id\" class=\"Counter.spec\"><h3>myTitle</h3><p>value</p></div>",
+		t2 = "<div id=\"myId\" class=\"Counter.spec\"><h3>myTitle</h3><p>myValue</p></div>",
+		t3 = "<div id=\"id\" class=\"Counter.spec\"><h3>myTitle</h3><p>And this is a somewhat longer value type with some <code>&lt;html></code> in the mix :)</p></div>",
+		tt = "Counter.spec",
+		oldTemplates = {};
+
+	beforeEach(function() {
+		oldTemplates = windgazer.ALCounterHelper.templates;
+		windgazer.ALCounterHelper.queue = {};
+		windgazer.ALCounterHelper.templates = {};
+	});
+
+	afterEach(function() {
+		windgazer.ALCounterHelper.templates = oldTemplates;
+	});
+	
+	it("loads a template for Counter.spec type", function() {
+
+		runs(function() {
+			windgazer.ALCounterHelper.loadTemplate(tt);
+		});
+		
+		waitsFor(function() {
+			return windgazer.ALCounterHelper.getTemplate(tt) !== null;
+		}, "The template should be available", 500);
+		
+		runs(function() {
+			var tmplt = windgazer.ALCounterHelper.getTemplate(tt);
+			console.debug( tmplt );
+			expect( tmplt ).toBe( t );
+		});
+		
+	});
+
+	it("parses and renders templates with provided value", function() {
+	
+		var tmplt = windgazer.ALCounterHelper.fillTemplate( t, {
+			title: "myTitle"
+		} );
+		expect( tmplt ).toBe( t1 );
+
+	});
+
+	it("parses and renders templates with provided values", function() {
+	
+		var tmplt = windgazer.ALCounterHelper.fillTemplate( t, {
+			title: "myTitle",
+			id : "myId",
+			value : "myValue"
+		} );
+		expect( tmplt ).toBe( t2 );
+
+	});
+
+	it("parses and renders templates with complex values", function() {
+	
+		var tmplt = windgazer.ALCounterHelper.fillTemplate( t, {
+			title: "myTitle",
+			value : "And this is a somewhat longer value type with some <code>&lt;html></code> in the mix :)"
+		} );
+		expect( tmplt ).toBe( t3 );
+
+	});
+
+});
+
 describe("ALCounter", function() {
 
 	it("exists", function() {
@@ -17,13 +87,10 @@ describe("ALCounter", function() {
 		expect( alc1.getId() ).not.toEqual( alc2.getId() );
 	});
 
-	it("throws an exception when getting type", function(){
+	it("gets the type for this type of counter", function(){
 		var alc1 = new ALCounter();
-		var checkedException = function() {
-			alc1.getType();
-		}
 		
-		expect( checkedException ).toThrow();
+		expect( alc1.getType() ).toBe("ALCounter");
 	});
 
 	it("sets default title to 'No Title'", function(){
@@ -51,24 +118,16 @@ describe("ALCounter", function() {
 		
 		expect( alc1.getValue() ).toBe( v );
 	});
+	
+	it("renders it's template", function() {
+		var v = 42,
+			t = "My Counter",
+			alc1 = new ALCounter( { title: t, value: v } ),
+			node = alc1.renderTemplate();
 
-});
-
-describe("ALCounterHelper", function() {
-
-	it("loads a template for ALCounter type", function() {
-		runs(function() {
-			windgazer.ALCounterHelper.loadTemplate("Counter.spec");
-		});
-		
-		waitsFor(function() {
-			return windgazer.ALCounterHelper.getTemplate("Counter.spec") !== null;
-		}, "The template should be available", 500);
-		
-		runs(function() {
-			expect(windgazer.ALCounterHelper.getTemplate("Counter.spec").indexOf("div") > 0).toBe(true);
-		});
-		
+		console.debug( node, windgazer.ALCounterHelper.templates );
+		expect( node.childNodes.length ).toBe( 1 );
+		expect( node.firstChild.childNodes.length ).toBe( 4 );
 	});
 
 });

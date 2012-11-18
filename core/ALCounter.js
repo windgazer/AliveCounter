@@ -1,15 +1,17 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
-windgazer.ALCounterHelper = {};
 
 var ALCounter = ( function( domain ) {
 
-	var uidI = 0;
-
-	domain.ALCounterHelper = {
+	var uidI = 0,
+		type = "ALCounter";
+	
+	helper = {
 			
 			queue: {},
 			
 			templates: {},
+			
+			re: /\${([^}]+)}/gi,
 
 			/**
 			 * Attempt to load an html-template into memory based on the
@@ -35,19 +37,22 @@ var ALCounter = ( function( domain ) {
 		
 						var templateUrl = m[1] + type + ".html";
 
-						if ( typeof this.templates[ templateUrl ] === "undefined"
+						if ( typeof this.templates[ type ] === "undefined"
 							 && typeof this.queue[ templateUrl ] === "undefined" ) {
 
-							console.log( "Setting new template loading to queue", templateUrl );
 							var that = this;
 							var request = new HTTPRequest( function( wrapper ) {
 
-								console.log( wrapper.httpRequest.responseText );
+								var txt = wrapper.httpRequest.responseText;
 								delete that.queue[ templateUrl ];
+								that.addTemplate( type, txt );
+								ce.fireEvent("template.finished", {type: type, template: txt});
 
 							}, false );
-							request.doGet( templateUrl );
+
 							this.queue[ templateUrl ] = request;
+							ce.fireEvent( "template.queued", {type: type, url: templateUrl} );
+							request.doGet( templateUrl );
 
 						}
 		
@@ -57,17 +62,45 @@ var ALCounter = ( function( domain ) {
 
 			},
 			
+			addTemplate : function( type, template ) {
+
+				this.templates[ type ] = template;
+
+			},
+			
 			getTemplate : function( type ) {
 
-				return null;
+				return this.templates[ type ]?this.templates[ type ]:null;
 
+			},
+			
+			fillTemplate : function( template, values ) {
+
+				var o = "",
+				    m = null,
+				    preIndex = 0;
+
+				while (m = this.re.exec(template)) {
+					var v = values[m[1]];
+					v = v||m[1];
+					o += RegExp.leftContext.substr(preIndex) + v;
+					preIndex = this.re.lastIndex;
+				}
+
+				o += RegExp.rightContext;
+
+				return o;
 			}
 			
 	};
 
+	domain.ALCounterHelper = helper;
+
 	function generateUID() {
-		return "ALCounter" + uidI++;
+		return type + uidI++;
 	};
+	
+	helper.loadTemplate(type);
 
 	return Class.extend({
 		init: function( params ) {
@@ -75,18 +108,36 @@ var ALCounter = ( function( domain ) {
 			this.id = generateUID();
 			this.title = typeof params.title == 'undefined'?"No Title":params.title;
 			this.value = typeof params.value == 'undefined'?0:params.value;
+			this.type = type;
 		},
 		getId: function() {
 			return this.id;
 		},
 		getType: function() {
-			throw "Must be implemented!!";
+			return this.type;
 		},
 		getTitle: function() {
 			return this.title;
 		},
 		getValue: function() {
 			return this.value;
+		},
+		renderTemplate: function( node ) {
+			var doc = document.createDocumentFragment(),
+				div = document.createElement("div"),
+				template = helper.getTemplate( this.getType() ),
+				that = this,
+				values = {
+					title	: that.getTitle(),
+					id		: that.getId(),
+					value	: that.getValue(),
+					type	: that.getType()
+				};
+			
+			div.innerHTML = helper.fillTemplate( template, values );
+			while ( div.firstChild ) doc.appendChild( div.firstChild );
+			if ( node ) node.parentNode.replaceChild( node, doc );
+			return doc;
 		}
 	});
 
