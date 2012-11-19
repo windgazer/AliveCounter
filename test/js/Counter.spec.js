@@ -118,6 +118,19 @@ describe("ALCounter", function() {
 		
 		expect( alc1.getValue() ).toBe( v );
 	});
+
+	it("can alter the value of the counter", function(){
+		var v = 42;
+		var alc1 = new ALCounter( {value: v} );
+		
+		alc1.modify(5);
+		
+		expect( alc1.getValue() ).toBe( v + 5 );
+		
+		alc1.modify(-8);
+		
+		expect( alc1.getValue() ).toBe( v - 3 );
+	});
 	
 	it("renders it's template", function() {
 		var v = 42,

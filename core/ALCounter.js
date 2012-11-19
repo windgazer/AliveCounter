@@ -5,6 +5,8 @@ var ALCounter = ( function( domain ) {
 	var uidI = 0,
 		type = "ALCounter";
 	
+	domain.counters = {};
+	
 	helper = {
 			
 			queue: {},
@@ -82,7 +84,7 @@ var ALCounter = ( function( domain ) {
 
 				while (m = this.re.exec(template)) {
 					var v = values[m[1]];
-					v = v||m[1];
+					v = typeof v!=="undefined"?v:m[1];
 					o += RegExp.leftContext.substr(preIndex) + v;
 					preIndex = this.re.lastIndex;
 				}
@@ -101,6 +103,24 @@ var ALCounter = ( function( domain ) {
 	};
 	
 	helper.loadTemplate(type);
+	
+	function modifyCounterByLink( a, inc ) {
+		var href = a.href,
+			indx = href.indexOf( '#' ),
+			id = a.href.substr( indx + 1 ),
+			counter = domain.counters[id];
+
+		counter.modify( inc );
+		ce.fireEvent("counter.modified", { link: a, inc: inc, id: id, counter: counter });
+		return false;
+	}
+	
+	LinkListener.addHandler( "countUp", function( a ) {
+		return modifyCounterByLink( a, 1 );
+	});
+	LinkListener.addHandler( "countDown", function( a ) {
+		return modifyCounterByLink( a, -1 );
+	});
 
 	return Class.extend({
 		init: function( params ) {
@@ -109,6 +129,7 @@ var ALCounter = ( function( domain ) {
 			this.title = typeof params.title == 'undefined'?"No Title":params.title;
 			this.value = typeof params.value == 'undefined'?0:params.value;
 			this.type = type;
+			domain.counters[this.id] = this;
 		},
 		getId: function() {
 			return this.id;
@@ -121,6 +142,9 @@ var ALCounter = ( function( domain ) {
 		},
 		getValue: function() {
 			return this.value;
+		},
+		modify: function( inc ) {
+			this.value = this.value + inc;
 		},
 		renderTemplate: function( node ) {
 			var doc = document.createDocumentFragment(),

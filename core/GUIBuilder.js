@@ -32,6 +32,17 @@ var GUIBuilder = (function( domain ) {
 
 	});
 	
+	ce.attachEvent("counter.modified", function( eventType, data ) {
+
+		var node = document.getElementById( data.id );
+		if (node) {
+
+			node.parentNode.replaceChild( data.counter.renderTemplate(), node );
+
+		};
+
+	});
+	
 	queueEmpty = isTemplateQueueEmpty();
 	
 	console.log( queueEmpty );

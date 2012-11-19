@@ -70,10 +70,5 @@ var LinkListener = {
 	var LinkListenerClick = Events.attach(document.documentElement||document.body, "click", function(e) {
 		LinkListener.handler(e);
 	});
-	//Cleanup
-	var LinkListenerUnload = Events.attach(document.documentElement||document.body, "unload", function() {
-		Events.detach(LinkListenerClick);
-		Events.detach(LinkListenerUnload);
-	});
 
 })();
