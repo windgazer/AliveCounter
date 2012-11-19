@@ -69,6 +69,8 @@ describe("ALCounterHelper", function() {
 });
 
 describe("ALCounter", function() {
+	var t0 = "<div id=\"${id}\" class=\"Counter.spec\"><h3>${title}</h3><p>${value}</p></div>",
+		t1 = '<h3>My Counter</h3><p>42</p>';
 
 	it("exists", function() {
 		expect( ALCounter ).toBeDefined();
@@ -146,12 +148,15 @@ describe("ALCounter", function() {
 	it("renders it's template", function() {
 		var v = 42,
 			t = "My Counter",
-			alc1 = new ALCounter( { title: t, value: v } ),
-			node = alc1.renderTemplate();
+			alc1 = new ALCounter( { title: t, value: v } );
 
-		console.debug( node, windgazer.ALCounterHelper.templates );
+		windgazer.ALCounterHelper.templates[alc1.getType()] = t0;
+
+		var node = alc1.renderTemplate();
+
 		expect( node.childNodes.length ).toBe( 1 );
-		expect( node.firstChild.childNodes.length ).toBe( 4 );
+		expect( node.firstChild.childNodes.length ).toBe( 2 )
+		expect( node.firstChild.innerHTML ).toBe( t1 );
 	});
 
 });
