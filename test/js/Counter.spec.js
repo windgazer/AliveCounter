@@ -120,11 +120,22 @@ describe("ALCounter", function() {
 	});
 
 	it("can alter the value of the counter", function(){
-		var v = 42;
+		var v = 42,
+			et = "counter.modified",
+			eventType = null,
+			id;
+
 		var alc1 = new ALCounter( {value: v} );
+
+		ce.attachEvent(et, function (event, data) {
+			eventType = event;
+			id = data.id;
+		});
 		
 		alc1.modify(5);
-		
+
+		expect( eventType ).toBe( et );
+		expect( id ).toBe( alc1.getId() );
 		expect( alc1.getValue() ).toBe( v + 5 );
 		
 		alc1.modify(-8);
