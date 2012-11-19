@@ -18,7 +18,7 @@ var GUIBuilder = (function( domain ) {
 		if ( queueEmpty ) {
 
 			var alc = new ALCounter();
-			document.documentElement.appendChild(alc.renderTemplate());
+			document.body.appendChild(alc.renderTemplate());
 
 		}
 
