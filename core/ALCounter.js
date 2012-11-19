@@ -3,9 +3,10 @@ window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 var ALCounter = ( function( domain ) {
 
 	var uidI = 0,
-		type = "ALCounter";
+		type = "ALCounter",
+		counters = {};
 	
-	domain.counters = {};
+	domain.counters = counters;
 	
 	helper = {
 			
@@ -108,10 +109,9 @@ var ALCounter = ( function( domain ) {
 		var href = a.href,
 			indx = href.indexOf( '#' ),
 			id = a.href.substr( indx + 1 ),
-			counter = domain.counters[id];
+			counter = counters[id];
 
 		counter.modify( inc );
-		ce.fireEvent("counter.modified", { link: a, inc: inc, id: id, counter: counter });
 		return false;
 	}
 	
@@ -129,7 +129,7 @@ var ALCounter = ( function( domain ) {
 			this.title = typeof params.title == 'undefined'?"No Title":params.title;
 			this.value = typeof params.value == 'undefined'?0:params.value;
 			this.type = type;
-			domain.counters[this.id] = this;
+			counters[this.id] = this;
 		},
 		getId: function() {
 			return this.id;
@@ -145,6 +145,7 @@ var ALCounter = ( function( domain ) {
 		},
 		modify: function( inc ) {
 			this.value = this.value + inc;
+			ce.fireEvent("counter.modified", { id: this.id, counter: this });
 		},
 		renderTemplate: function( node ) {
 			var doc = document.createDocumentFragment(),
