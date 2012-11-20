@@ -4,7 +4,8 @@ var ALCounter = ( function( domain ) {
 
 	var uidI = 0,
 		type = "ALCounter",
-		counters = {};
+		counters = {},
+		types = {};
 	
 	domain.counters = counters;
 	
@@ -93,6 +94,18 @@ var ALCounter = ( function( domain ) {
 				o += RegExp.rightContext;
 
 				return o;
+			},
+			
+			addType: function( type, object ) {
+
+				types[ type ] = object;
+
+			},
+			
+			getType: function( type ) {
+
+				return types[ type ];
+
 			}
 			
 	};
@@ -122,7 +135,7 @@ var ALCounter = ( function( domain ) {
 		return modifyCounterByLink( a, -1 );
 	});
 
-	return Class.extend({
+	var alcounterClass = Class.extend({
 		init: function( params ) {
 			var params = params||{};
 			this.id = generateUID();
@@ -165,5 +178,9 @@ var ALCounter = ( function( domain ) {
 			return doc;
 		}
 	});
+	
+	helper.addType( type, alcounterClass );
+
+	return alcounterClass;
 
 })( windgazer );
