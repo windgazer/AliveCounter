@@ -65,6 +65,16 @@ describe("ALCounterHelper", function() {
 		expect( tmplt ).toBe( t3 );
 
 	});
+	
+	it("can return an ALCounter type Class", function() {
+		var alclass = windgazer.ALCounterHelper.getType("ALCounter");
+
+		expect(typeof alclass).toBe("function");
+		
+		var alc = new alclass();
+
+		expect(typeof alc).toBe("object");
+	});
 
 });
 
