@@ -9,6 +9,20 @@
     </style>
 
 	<script>nl_windgazer_debug=true</script>
+	<script>
+		nl_windgazer_template = [
+				{
+					title: "My Life",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "His Life",
+					type:"ALCounter",
+					value:20
+				}
+		];
+	</script>
 
     <script src="libs/sji.js"></script>
     <script src="libs/customevents.js"></script>
@@ -23,6 +37,15 @@
 </head>
 
 <body>
-    <!-- Put your html here -->
+    <header>
+    	<h1>ALive Counter</h1>
+    </header>
+    <menu>
+    	<a href="#content" rel="reset">Reset</a>
+    </menu>
+    <section id="content" class="content"></section>
+    <footer>
+    	&copy; 2012 Windgazer.nl
+    </footer>
 </body>
 </html>
