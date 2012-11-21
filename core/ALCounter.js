@@ -106,6 +106,12 @@ var ALCounter = ( function( domain ) {
 
 				return types[ type ];
 
+			},
+			
+			getCounter: function( id ) {
+
+				return counters[id];
+
 			}
 			
 	};

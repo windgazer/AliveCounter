@@ -1,12 +1,15 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
 var GUIBuilder = (function( domain ) {
-	var queueEmpty = true;
+
+	var id = "content",
+		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 
 	LinkListener.addHandler( "reset", function( a ) {
+
 		render();
-		
 		return false;
+
 	});
 
 	var isTemplateQueueEmpty = function() {
@@ -21,13 +24,13 @@ var GUIBuilder = (function( domain ) {
 	
 	var render = function() {
 
-		if ( queueEmpty ) {
-			var cnt = document.getElementById("content");
+		if ( isTemplateQueueEmpty() ) {
+			var cnt = document.getElementById(id);
 			cnt.innerHTML = "";
 
-			for (var i = 0; i < nl_windgazer_template.length; i++ ) {
+			for (var i = 0; i < template.length; i++ ) {
 
-				var ct = nl_windgazer_template[ i ];
+				var ct = template[ i ];
 				var t = windgazer.ALCounterHelper.getType(ct.type);
 				var c = new t({
 					title: ct.title,
@@ -43,8 +46,6 @@ var GUIBuilder = (function( domain ) {
 	
 	ce.attachEvent("template.finished", function(eventType, data) {
 
-		queueEmpty = isTemplateQueueEmpty();
-		Console.log("receiving event template.finished.", data, queueEmpty);
 		render();
 
 	});
@@ -59,13 +60,24 @@ var GUIBuilder = (function( domain ) {
 		};
 
 	});
-	
-	queueEmpty = isTemplateQueueEmpty();
-	
-	console.log( queueEmpty );
-	
+
 	render();
 
-	return {};
+	return {
+		isTemplateQueueEmpty:isTemplateQueueEmpty,
+		render: render,
+		setRoot: function( guid ) {
+			id = guid;
+		},
+		getRoot: function() {
+			return id;
+		},
+		setTemplate: function( t ) {
+			template = t;
+		},
+		getTemplate: function() {
+			return template;
+		}
+	};
 
 })( windgazer );
