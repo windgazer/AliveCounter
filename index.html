@@ -1,70 +1,72 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640" />
+<head>
+    <title>ALive Counter</title>
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <link href="style/main.css" rel="stylesheet" media="all"/>
+    <link href="style/mtg-font/stylesheet.css" rel="stylesheet" media="all"/>
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
-    <title>Alivecounter by windgazer</title>
-  </head>
+    <style type="text/css">
+    </style>
 
-  <body>
-    <a id="forkme_banner" href="https://github.com/windgazer/AliveCounter">View on GitHub</a>
-    <div class="shell">
+	<script>nl_windgazer_debug=true</script>
+	<script>
+		nl_windgazer_template = [
+				{
+					title: "My Life",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "Player 1",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "Player 2",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "Player 3",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "Player 4",
+					type:"ALCounter",
+					value:20
+				},
+				{
+					title: "Player 5",
+					type:"ALCounter",
+					value:20
+				}
+		];
+	</script>
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Alivecounter</h1>
-            <h2>A counter app for numerous types of games, MTG, Munchkin and possibly many more...</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+    <script src="libs/sji.js"></script>
+    <script src="libs/customevents.js"></script>
+    <script src="libs/HTTPRequest.js"></script>
+    <script src="libs/events-2.0.js"></script>
+    <script src="libs/linklistener.js"></script>
+    <script src="libs/Resolutions.js"></script>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/windgazer/AliveCounter/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/windgazer/AliveCounter/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+    <script src="core/ALCounter.js"></script>
+    <script src="core/GUIBuilder.js"></script>
 
+</head>
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <h1>AliveCounter</h1>
-
-<p>A counter app for numerous types of games, MTG, Munchkin and possibly many more...</p>
-      </section>
-
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/windgazer">windgazer</a> can be found on <a href="https://github.com/windgazer/AliveCounter">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
-
-    </div>
-
-    
-  </body>
+<body>
+    <header>
+    	<h1>ALive Counter</h1>
+    </header>
+    <menu>
+    	<a href="#content" rel="reset">Reset</a>
+    </menu>
+    <section id="content" class="content"></section>
+    <footer>
+    	&copy; 2012 Windgazer.nl
+    </footer>
+</body>
 </html>
