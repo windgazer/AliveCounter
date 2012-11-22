@@ -20,7 +20,7 @@ var LinkListener = {
 	/**
 	 * @private
 	 */
-	aRE:/^a$/i,
+	aRE:/^(a)|(div)$/i,
 	/**
 	 * @private
 	 */
