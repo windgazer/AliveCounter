@@ -4,6 +4,7 @@ var GUIBuilder = (function( domain ) {
 
 	var id = "content",
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
+		dblclick = false;
 
 	LinkListener.addHandler( "reset", function( a ) {
 
@@ -28,6 +29,15 @@ var GUIBuilder = (function( domain ) {
 
 			var cnt = document.getElementById(id);
 			cnt.innerHTML = "";
+			
+			if ( dblclick === false ) {
+				dblclick = Events.attach( cnt, "dblclick", function(e) {
+					return Events.cancel(e||Event);
+				} );
+				Events.attach( cnt, "selectstart", function(e) {
+					return Events.cancel(e||Event);
+				} );
+			}
 
 			for (var i = 0; i < template.length; i++ ) {
 
