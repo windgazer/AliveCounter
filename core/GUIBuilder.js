@@ -25,6 +25,7 @@ var GUIBuilder = (function( domain ) {
 	var render = function() {
 
 		if ( isTemplateQueueEmpty() ) {
+
 			var cnt = document.getElementById(id);
 			cnt.innerHTML = "";
 
@@ -39,6 +40,9 @@ var GUIBuilder = (function( domain ) {
 				cnt.appendChild(c.renderTemplate());
 
 			}
+			
+			cnt.className = cnt.className.replace(/ ?counters_./gi, "");
+			cnt.className += " counters_" + template.length;
 
 		}
 
