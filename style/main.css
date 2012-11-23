@@ -5,7 +5,7 @@
 	font-family: inherit;
 }
 
-body, html, ul {
+body, html, ul, menu {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -22,9 +22,15 @@ h1, h2, h3, h4 {
 	font-family: "mtg-regular", serif;
 }
 
+a {
+	color: white;
+	text-decoration: none;
+}
+
 body {
 	color: white;
 	background: white url(../assets/MTG4c.png) no-repeat 50% 50%;
+	background-size: 75% auto;
 	-webkit-transition: all 2s ease-in-out;
 	-moz-transition: all 2s ease-in-out;
 	-o-transition: all 2s ease-in-out;
@@ -32,8 +38,10 @@ body {
 }
 
 header,
+menu,
 .counter,
-footer {
+footer,
+.dialogEnd {
 	background: rgba(0, 0, 0, 0.65);
 	border-color: rgba(0, 0, 0, 0.75);
 	border-style: solid;
@@ -47,13 +55,85 @@ header {
 	right: 0;
 	padding: 0.25em;
 	border-width: 0 0 0.2em;
+	font-size: 175%;
+}
+
+header > h1 {
+	float: left;
+}
+
+header > [rel="dialogStart"]:before {
+	content: ".";
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	padding: 0.25em 0 0 0.25em;
+	background: white;
+	box-shadow: 0 0.35em 0 rgba( 255, 255, 255, 0.6 ),
+				0 0.7em 0 rgba( 255, 255, 255, 0.3 );
+}
+
+header > [rel="dialogStart"] {
+	float: right;
+	overflow: hidden;
+	text-indent: -10em;
+	width: 1em;
+	height: 1em;
+	position: relative;
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 0.5em 0.5em;
+	margin: 0 0 -0.5em;
+}
+
+.orientation_landscape > header > [rel="dialogStart"] {
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 1em 1em;
+	margin: 0 0 -1em;
 }
 
 menu {
+	background: rgba(0, 0, 0, 0.85);
 	position: absolute;
-	top: -3em;
-	height: 2.5em;
+	top: 1em;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+	overflow: auto;
 	padding: 0.25em;
+	border-width: 0.2em;
+	border-radius: 0.5em;
+	z-index: 15;
+	display: none;
+}
+
+menu:target {
+	display: block;
+}
+
+.dialogEnd {
+	position: absolute;
+	bottom: 1em;
+	right: 1em;
+	background: rgba( 127, 127, 255, 0.5 );
+	border-radius: 0.25em;
+	border-width: 0.2em;
+}
+.dialogEnd > a {
+	display: block;
+	padding: 0.25em 0.75em;
+}
+
+menu  > li {
+	margin: 0.25em;
+	float: left;
+}
+
+menu > li > a {
+	display: inline-block;
+	padding: 0.25em 0.75em;
 }
 
 .counter {
@@ -101,15 +181,7 @@ menu {
 }
 
 .content {
-	margin: 1.7em 0 1.7em;
-}
-
-.content:after {
-	content: ".";
-	display: block;
-	clear: both;
-	width: 0;
-	height: 0;
+	margin: 3.5em 0 1.7em;
 }
 
 footer {
@@ -122,12 +194,13 @@ footer {
 	padding: 0.25em;
 }
 
+/*Orientation based modifications*/
 .orientation_landscape > .counters_2 {
 	white-space: nowrap;
 	text-align: center;
 }
 .orientation_landscape > .counters_2 > .counter {
-	font-size: 400%;
+	font-size: 375%;
 	float: none;
 	display: inline-block;
 }
@@ -137,4 +210,15 @@ footer {
 	width: auto;
 	margin: 1em;
 	float: none;
+}
+
+
+/* Float clears */
+.content:after,
+header:after {
+	content: ".";
+	display: block;
+	clear: both;
+	width: 0;
+	height: 0;
 }
