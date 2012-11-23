@@ -97,6 +97,8 @@ menu {
 	-moz-transition: color 500ms ease-in-out;
 	-o-transition: color 500ms ease-in-out;
 	transition: color 500ms ease-in-out;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 [rel*="count"]:hover {
 	color: rgba(128, 128, 128, 0.75);
@@ -131,4 +133,21 @@ footer {
 	border-width: 0.2em 0 0;
 	text-align: right;
 	padding: 0.25em;
+}
+
+.orientation_landscape > .counters_2 {
+	white-space: nowrap;
+	text-align: center;
+}
+.orientation_landscape > .counters_2 > .counter {
+	font-size: 400%;
+	float: none;
+	display: inline-block;
+}
+.orientation_portrait > .counters_2 > .counter {
+	font-size: 200%;
+	display: block;
+	width: auto;
+	margin: 1em;
+	float: none;
 }
