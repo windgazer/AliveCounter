@@ -22,6 +22,10 @@ h1, h2, h3, h4 {
 	font-family: "mtg-regular", serif;
 }
 
+a {
+	color: white;
+}
+
 body {
 	color: white;
 	background: white url(../assets/MTG4c.png) no-repeat 50% 50%;
@@ -32,6 +36,7 @@ body {
 }
 
 header,
+menu,
 .counter,
 footer {
 	background: rgba(0, 0, 0, 0.65);
@@ -50,10 +55,18 @@ header {
 }
 
 menu {
+	background: rgba(0, 0, 0, 0.85);
 	position: absolute;
-	top: -3em;
-	height: 2.5em;
+	top: 1em;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+	overflow: auto;
 	padding: 0.25em;
+	border-width: 0.2em;
+	border-radius: 0.5em;
+	z-index: 15;
+	display: none;
 }
 
 .counter {
