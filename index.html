@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>ALive Counter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
@@ -66,9 +66,11 @@
 <body>
     <header>
     	<h1>ALive Counter</h1>
+    	<a rel="dialogStart" href="#options">Options</a>
     </header>
-    <menu>
-    	<a href="#content" rel="reset">Reset</a>
+    <menu id="options">
+   		<li><a href="#content" rel="reset">Reset</a></li>
+   		<li class="dialogEnd"><a href="#content" rel="dialogEnd">Done</a></li>
     </menu>
     <section id="content" class="content">
     <p>You should not be able to read this content. If you can, the application is being slow and should soon start loading. If not, please try refreshing the page! If that still does not help, try and gather as much information as you can and then file a bug-report on the github <a href="https://github.com/windgazer/AliveCounter/issues">project page</a>.</p>

@@ -9,7 +9,7 @@ var GUIBuilder = (function( domain ) {
 	LinkListener.addHandler( "reset", function( a ) {
 
 		render();
-		return false;
+		return true;
 
 	});
 
