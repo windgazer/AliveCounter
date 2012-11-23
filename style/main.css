@@ -29,6 +29,7 @@ a {
 body {
 	color: white;
 	background: white url(../assets/MTG4c.png) no-repeat 50% 50%;
+	background-size: 75% auto;
 	-webkit-transition: all 2s ease-in-out;
 	-moz-transition: all 2s ease-in-out;
 	-o-transition: all 2s ease-in-out;
@@ -52,6 +53,43 @@ header {
 	right: 0;
 	padding: 0.25em;
 	border-width: 0 0 0.2em;
+	font-size: 175%;
+}
+
+header > h1 {
+	float: left;
+}
+
+header > [rel="dialogStart"]:before {
+	content: ".";
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	padding: 0.25em 0 0 0.25em;
+	background: white;
+	box-shadow: 0 0.35em 0 rgba( 255, 255, 255, 0.6 ),
+				0 0.7em 0 rgba( 255, 255, 255, 0.3 );
+}
+
+header > [rel="dialogStart"] {
+	float: right;
+	overflow: hidden;
+	text-indent: -10em;
+	width: 1em;
+	height: 1em;
+	position: relative;
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 0.5em 0.5em;
+	margin: 0 0 -0.5em;
+}
+
+.orientation_landscape > header > [rel="dialogStart"] {
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 1em 1em;
+	margin: 0 0 -1em;
 }
 
 menu {
@@ -67,6 +105,10 @@ menu {
 	border-radius: 0.5em;
 	z-index: 15;
 	display: none;
+}
+
+menu:target {
+	display: block;
 }
 
 .counter {
@@ -114,15 +156,7 @@ menu {
 }
 
 .content {
-	margin: 1.7em 0 1.7em;
-}
-
-.content:after {
-	content: ".";
-	display: block;
-	clear: both;
-	width: 0;
-	height: 0;
+	margin: 3.5em 0 1.7em;
 }
 
 footer {
@@ -135,12 +169,13 @@ footer {
 	padding: 0.25em;
 }
 
+/*Orientation based modifications*/
 .orientation_landscape > .counters_2 {
 	white-space: nowrap;
 	text-align: center;
 }
 .orientation_landscape > .counters_2 > .counter {
-	font-size: 400%;
+	font-size: 375%;
 	float: none;
 	display: inline-block;
 }
@@ -150,4 +185,15 @@ footer {
 	width: auto;
 	margin: 1em;
 	float: none;
+}
+
+
+/* Float clears */
+.content:after,
+header:after {
+	content: ".";
+	display: block;
+	clear: both;
+	width: 0;
+	height: 0;
 }
