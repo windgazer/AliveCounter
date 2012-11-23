@@ -9,66 +9,87 @@
  * LinkListener.addHandler(String, function);
  *
  * @class
- * @version 1.0.070721
- * @author Martin Reurings - http://www.windgazer.nl
+ * @singleton
+ * @version 2.0.121123
+ * @author Martin Reurings - http://www.windgazer.nl/
  * @requires Events
  * @see Events
  * @depends events.js
  */
 
-var LinkListener = {
-	/**
-	 * @private
-	 */
-	aRE:/^(a)|(div)|(span)$/i,
-	/**
-	 * @private
-	 */
-	handles: {
-		internal:function(link) {
-			return true;
+var LinkListener = ( function(){
+	var aRE				=/^(a)|(div)|(span)$/i,
+		preventHistory	= false,
+		handles			= {
+			internal:function(link) {
+				return true;
+			},
+			external:function(link) {
+				window.open(link.href, "_blank");
+				return false;
+			}
 		},
-		external:function(link) {
-			window.open(link.href, "_blank");
-			return false;
-		}
-	},
+		dblHandles		= {};
+	
 	/**
-	 * @private
+	 * Handler that actually figures out if we're clicking a valid element.
+	 * 
+	 * @param e The event
+	 * @returns undefined
 	 */
-	handler:function(e){
+	function handler(e, dbl){
 		var e = e||event;
 		if (e.button > 1 || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return true; //stop handling if not left mousebutton or when a modifier key was pressed.
 		var target = e.target||e.srcElement;
 		if (!target.nodeName) target = target.parentNode; //Old mozilla's and Safari's
-		if (this.aRE.test(target.nodeName)) {
+		if (aRE.test(target.nodeName)) {
+			var h = dbl?dblHandles:handles;
 			var rel = target.getAttribute("rel");
-			if (rel && this.handles[rel]) {
-				if (!this.handles[rel](target)) return Events.cancel(e);
+			if (rel && h[rel]) {
+				if (!h[rel](target, dbl)) return Events.cancel(e);
 			}
-//			Console.log("Attempting to prevent history entry to be added.");
-//			window.location.replace( target.href );
-//			return Events.cancel(e);
+			if ( preventHistory ) {
+				Console.log("Attempting to prevent history entry to be added.");
+				window.location.replace( target.href );
+				return Events.cancel(e);
+			}
 		}		
-	},
-	/**
-	 * Add an extra handler to the listener.
-	 * Use this method to add an extra handler for
-	 * a rel that hasn't been defined by default.
-	 * 
-	 * @param {String} id The value of the rel-attribute on which you want to react.
-	 * @param {function} handler A function to handle the event, takes the link as a parameter.
-	 */
-	addHandler:function(id, handler) {
-		this.handles[id] = handler;
 	}
-};
 
-(function(){
-
-	//Attach the linklistener
+	//Attach the listeners
 	var LinkListenerClick = Events.attach(document.documentElement||document.body, "click", function(e) {
-		LinkListener.handler(e);
+		handler(e);
 	});
+	var LinkListenerDblClick = Events.attach(document.documentElement||document.body, "dblclick", function(e) {
+		handler(e, true);
+	});
+
+	return {
+		/**
+		 * Enable and/or disable links that are followed from going into browser history.
+		 * This can be usefull for apps that use swipe-left/right for in-app navigation.
+		 * 
+		 * @param {boolean} b true for enabling, false for disabling. Disabled by default.
+		 */
+		setPreventHistory: function(b) {
+			preventHistory = b;
+		},
+		/**
+		 * Add an extra handler to the listener.
+		 * Use this method to add an extra handler for
+		 * a rel that hasn't been defined by default.
+		 * 
+		 * @param {String} id The value of the rel-attribute on which you want to react.
+		 * @param {function} handler A function to handle the event, takes the link as a parameter.
+		 */
+		addHandler:function(id, handler, dbl, both) {
+			if ( !dbl || both ) {
+				handles[id] = handler;
+			}
+			if ( dbl || both ) {
+				dblHandles[id] = handler;
+			}
+		}
+	};
 
 })();

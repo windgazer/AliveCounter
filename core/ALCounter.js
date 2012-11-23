@@ -134,12 +134,12 @@ var ALCounter = ( function( domain ) {
 		return false;
 	}
 	
-	LinkListener.addHandler( "countUp", function( a ) {
-		return modifyCounterByLink( a, 1 );
-	});
-	LinkListener.addHandler( "countDown", function( a ) {
-		return modifyCounterByLink( a, -1 );
-	});
+	LinkListener.addHandler( "countUp", function( a, dbl ) {
+		return modifyCounterByLink( a, dbl?5:1 );
+	}, true, true);
+	LinkListener.addHandler( "countDown", function( a, dbl ) {
+		return modifyCounterByLink( a, dbl?-5:-1 );
+	}, true, true);
 
 	var alcounterClass = Class.extend({
 		init: function( params ) {
