@@ -125,9 +125,9 @@ var ALCounter = ( function( domain ) {
 	helper.loadTemplate(type);
 	
 	function modifyCounterByLink( a, inc ) {
-		var href = a.href,
+		var href = a.getAttribute("href"),
 			indx = href.indexOf( '#' ),
-			id = a.href.substr( indx + 1 ),
+			id = href.substr( indx + 1 ),
 			counter = counters[id];
 
 		counter.modify( inc );

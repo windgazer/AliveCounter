@@ -119,3 +119,19 @@ footer {
 	text-align: right;
 	padding: 0.25em;
 }
+
+.orientation_landscape > .counters_2 {
+	white-space: nowrap;
+}
+.orientation_landscape > .counters_2 > .counter {
+	font-size: 400%;
+	float: none;
+	display: inline-block;
+}
+.orientation_portrait > .counters_2 > .counter {
+	font-size: 200%;
+	display: block;
+	width: auto;
+	margin: 1em;
+	float: none;
+}
