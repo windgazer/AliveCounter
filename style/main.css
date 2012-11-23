@@ -124,6 +124,7 @@ footer {
 
 .orientation_landscape > .counters_2 {
 	white-space: nowrap;
+	text-align: center;
 }
 .orientation_landscape > .counters_2 > .counter {
 	font-size: 400%;
