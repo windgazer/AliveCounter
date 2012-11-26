@@ -142,15 +142,24 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		 * had to set the delay to 150 milliseconds. At this speed my test-devices
 		 * did not register ghost-clicks and the responsiveness was acceptable.
 		 */
-		
+
+		/**
+		 * touch method will set touchTime, everytime it gets hit.
+		 */
 		var ft = function( e ) {
 			touchTime = new Date().getTime();
 			handleTouchStart( e, TYPE.TOUCH );
 		};
-		
+
+		/**
+		 * mouse method will check against touchTime. In the unlikely edge-case
+		 * a use switches from touch to mouse the delay is set to a safe 500
+		 * milliseconds, which should be short enough not to miss a click from
+		 * user switching input devices :)
+		 */
 		var fm = function( e ) {
 			var now = new Date().getTime();
-			if ( now - touchTime > 250 ) {
+			if ( now - touchTime > 500 ) {
 				handleTouchStart( e, TYPE.TOUCH );
 			}
 		}
