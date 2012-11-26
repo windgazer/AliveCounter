@@ -17,12 +17,11 @@
 var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 	var re 				= /^b$/i,
-		coords			= new Array(),
-		timers			= new Array(),
+		startNode		= false,
 		body			= document.documentElement||document.body,
 		handlers		= {},
 		touchEnd		= false,
-		touchMove		= false
+		mouseUp			= false
 		events			= eventsGlobal,
 		dataAttributes	= [ "action", "tid" ]; //list of data-* attributes we want to access
 
@@ -41,37 +40,39 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 		//validate target node;
 		var a = validateNode( t );
-		if ( a !== false ) {
-			//Add start coords
-			addCoords(e);
+		if ( startNode === false && a !== false ) {
+			//Add start node
+			startNode = t;
+			var race = true;
 			//Add touch handlers
-			touchMove = events.attach( t, "touchmove", function( e ) {
-				handleTouchMove(e);
-			});
-			touchEnd = events.attach( body, "touchend", function( e ) {
-				handleTouchEnd(e);
-			});
-			timers.push( w.setTimeout(clear, 2500) );
-			return events.cancel( e );
+			var f = function( e ) {
+				if (race) {
+					race = false;
+					handleTouchEnd(e);
+				}
+			}
+			touchEnd = events.attach( body, "touchend", f );
+			//Add touch handlers
+			mouseUp = events.attach( body, "mouseup", f );
 		}
 
-	}
-	
-	function handleTouchMove(e) {
-		var e = e||event,
-			t = e.target||e.srcElement;
-		
 	}
 	
 	function handleTouchEnd(e) {
-		var e = e||event,
-			t = e.target||e.srcElement;
 		
-		if ( coords.length > 0 && t === coords[0].t ) {
-			handleClick( e, TYPE.TOUCH_END );
+		if ( startNode !== false ) {
+
+			var e = e||event,
+				t = e.target||e.srcElement;
+			
+			if ( startNode && startNode === t ) {
+				handleClick( e, TYPE.TOUCH_END );
+			}
+			startNode = false;
+	
+			reset();
 		}
 
-		reset();
 		return events.cancel( e );
 	}
 
@@ -81,43 +82,22 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 			t = e.target||e.srcElement;
 
 		var a = validateNode( t );
-		if ( (type > TYPE.CLICK || coords.length < 1) && a !== false ) {
+		if ( a !== false ) {
 			var r = handlers[a.action]( a, type );
 		}
 
 	}
-
-	function addCoords(e) {
-
-		var x = e.touches[0].clientX,
-			y = e.touches[0].clientY,
-			t = e.target||e.srcElement;
-		
-		coords.push({x:x,y:y,t:t});
-
-		var c = coords;
-		timers.push( w.setTimeout(c.shift, 2000) );
-		
-	}
 	
 	function reset() {
-		//unset touchEnd/touchMove
-		if (touchMove){
-			events.detach(touchMove);
-			touchMove = false;
+		//unset events
+		if (mouseUp){
+			events.detach(mouseUp);
+			mouseUp = false;
 		}
 		if (touchEnd) {
 			events.detach(touchEnd);
 			touchEnd = false;
 		}
-	}
-	
-	function clear() {
-		reset();
-		while (timers.length) {
-			w.clearTimeout( timers.shift() );
-		}
-		coords = new Array();
 	}
 	
 	function validateNode( n ) {
@@ -155,13 +135,28 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 	function init() {
 
-		var LinkListenerClick = events.attach( body, "click", function( e ) {
-			handleClick( e, TYPE.CLICK );
-		} );
+		/**
+		 * To protect stupid developers, mobile devices seem to still implement
+		 * a mousedown/up event-stack on top of touchstart/end. Since I won't
+		 * trust the bastards to keep this up I've implemented race-condition
+		 * checks.
+		 * As the above mentioned doesn't appear to happen simultaneously I've
+		 * had to set the delay to 150 milliseconds. At this speed my test-devices
+		 * did not register ghost-clicks and the responsiveness was acceptable.
+		 */
+		var race = true;
+		
+		var f = function( e ) {
+			if (race) {
+				race = false;
+				window.setTimeout( function(){ race = true; }, 150 );
+				handleTouchStart( e, TYPE.TOUCH );
+			}
+		};
 
-		var LinkListenerTouch = events.attach( body, "touchstart", function( e ) {
-			handleTouchStart( e, TYPE.TOUCH );
-		} );
+		var LinkListenerClick = events.attach( body, "mousedown", f );
+
+		var LinkListenerTouch = events.attach( body, "touchstart", f );
 
 	}
 
@@ -177,8 +172,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 				init();
 			},
 			endDebug: function() {
-				console.log("+++++++++++", coords, timers);
-				clear();
+				reset();
 				events = this.eventsOrigin;
 			}
 

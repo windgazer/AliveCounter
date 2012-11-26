@@ -1,4 +1,3 @@
-
 describe("FastButtonListener", function() {
 	
 	var fakeEvents = (function() {
@@ -85,29 +84,14 @@ describe("FastButtonListener", function() {
 		fakeEvents.clear();
 	})
 
-	it("should react on a click event",function(){
+	it("should not react on a click event",function(){
 		var called = false;
 		FastButtonListener.addHandler("testAction", function() {
 			called = true;
 		});
 		
 		fakeEvents.fire( "click", fakeElement, 0, 0 );
-		expect(called).toBe(true);
-	});
-
-	it("should react on a second click event, without delay",function(){
-		var called = false;
-		FastButtonListener.addHandler("testAction", function() {
-			called = true;
-		});
-		
-		fakeEvents.fire( "click", fakeElement, 0, 0 );
-		expect(called).toBe(true);
-
-		called = false;
-		fakeEvents.fire( "click", fakeElement, 0, 0 );
-		expect(called).toBe(true);
-		
+		expect(called).toBe(false);
 	});
 
 	it("should react on a touchstart/end sequence without moving",function(){
@@ -122,68 +106,61 @@ describe("FastButtonListener", function() {
 		expect(called).toBe(true);
 	});
 
-	it("should react on a second touchstart/end sequence without delay",function(){
+	it("should react on a mousedown/up sequence without moving",function(){
 		var called = false;
 		FastButtonListener.addHandler("testAction",function() {
 			called = true;
 		});
 
-		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
-		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
-		
-		expect(called).toBe(true);
+		fakeEvents.fire( "mousedown", fakeElement, 10, 10 );
+		fakeEvents.fire( "mouseup", fakeElement, 10, 10 );
 
-		called = false;
-
-		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
-		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
-		
 		expect(called).toBe(true);
 	});
-	
-	describe("Delay based specs", function() {
 
-		var called = false;
-		
-		beforeEach( function() {
-			FastButtonListener.debug( fakeEvents );
-		});
-		
-		afterEach( function() {
-			FastButtonListener.endDebug(  );
-			fakeEvents.clear();
-		})
-
-		it("should prevent reacting to a click event within 2 seconds of touchstart/end sequence",function(){
-			runs(function() {
-				called = false;
-				
-				FastButtonListener.addHandler("testAction",function() {
-					called = true;
-				});
-
-				fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
-				fakeEvents.fire( "touchend", fakeElement, 10, 10 );
-				
-				expect(called).toBe(true);
-		
-				called = false;		
-		
-				fakeEvents.fire( "click", fakeElement, 0, 0 );
-				
-				expect(called).toBe(false);
-			});
-			
-			waitsFor(function(){
-				fakeEvents.fire( "click", fakeElement, 0, 0 );
-				return called;
-			}, "click should be valid in about 2 seconds, 3 seconds is way too long...", 3000);
-
-			runs(function(){
-				expect(called).toBe(true);
-			});
+	it("should not react on a touchend after a touchstart/end sequence",function(){
+		var called = 0;
+		FastButtonListener.addHandler("testAction",function() {
+			called++;
 		});
 
+		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
+		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
+		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
+
+		expect(called).toBe(1);
+		
+	});
+
+	it("should not react on a mouseup after a touchstart/end sequence",function(){
+		var called = 0;
+		FastButtonListener.addHandler("testAction",function() {
+			called++;
+		});
+
+		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
+		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
+		fakeEvents.fire( "mouseup", fakeElement, 10, 10 );
+
+		expect(called).toBe(1);
+		
+	});
+
+	it("should react on a second touchstart/end sequence without delay",function(){
+		var called = 0;
+		FastButtonListener.addHandler("testAction",function() {
+			called++;
+		});
+
+		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
+		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
+		
+		expect(called).toBe(1);
+
+		fakeEvents.fire( "touchstart", fakeElement, 10, 10 );
+		fakeEvents.fire( "touchend", fakeElement, 10, 10 );
+		
+		expect(called).toBe(2);
 	});
 
 });
