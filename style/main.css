@@ -154,7 +154,7 @@ menu > li > a {
 	margin: 0 0 0.25em;
 }
 
-[data-action*="count"] {
+[rel*="count"] {
 	position: absolute;
 	color: rgba(0, 0, 0, 0.25);
 	text-align: center;
@@ -169,14 +169,14 @@ menu > li > a {
 	outline: none;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-[data-action*="count"]:hover {
+[rel*="count"]:hover {
 	color: rgba(128, 128, 128, 0.75);
 }
-[data-action="countUp"] {
+[rel="countUp"] {
 	top: 0;
 	bottom: 50%;
 }
-[data-action="countDown"] {
+[rel="countDown"] {
 	padding: 0.75em 0 0;
 	top: 50%;
 	bottom: 0;

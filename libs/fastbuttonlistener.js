@@ -16,15 +16,14 @@
 
 var FastButtonListener = ( function( w, document, eventsGlobal ){
 
-	var re 				= /^b|a$/i,
+	var re 				= /^a$/i,
 		startNode		= false,
 		touchTime		= 0,
 		body			= document.documentElement||document.body,
 		handlers		= {},
 		touchEnd		= false,
 		mouseUp			= false
-		events			= eventsGlobal,
-		dataAttributes	= [ "action", "tid" ]; //list of data-* attributes we want to access
+		events			= eventsGlobal;
 
 	//Setup some extra  handlers and init the right info
 	function handleStart(e) {
@@ -36,8 +35,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		var a = validateNode( t );
 		if ( startNode === false && a !== false ) {
 			//Add start node
-			startNode = t;
-			var race = true;
+			startNode = a;
 			//Add  handlers
 			var f = function( e ) {
 				handleEnd(e);
@@ -56,7 +54,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 			var e = e||event,
 				t = e.target||e.srcElement;
 			
-			if ( startNode && startNode === t ) {
+			if ( startNode && startNode.n === t ) {
 				handleClick( e );
 			}
 			startNode = false;
@@ -69,13 +67,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 	function handleClick( e ) {
 
-		var e = e||event,
-			t = e.target||e.srcElement;
-
-		var a = validateNode( t );
-		if ( a !== false ) {
-			var r = handlers[a.action]( a );
-		}
+		var r = handlers[startNode.rel]( startNode );
 
 	}
 	
@@ -96,7 +88,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		if ( re.test( n.nodeName ) ) {
 
 			var a = parseNode( n );
-			if ( a && a.action && handlers[a.action] ) {
+			if ( a && a.rel && handlers[a.rel] ) {
 				return a;
 			}
 			
@@ -107,18 +99,23 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 	}
 
 	function parseNode( n ) {
+		
+		var rel 	= n.getAttribute("rel"),
+			href 	= n.getAttribute("href"),
+			t		= null,
+			index 	= href.indexOf("#"),
+			id 		= index < 0 ? false : href.substr( index + 1 );
 
-		var o = { n: n };
-
-		for ( var i = dataAttributes.length; i--; ) {
-			var d = dataAttributes[i];
-			o[d] = n.getAttribute( "data-" + d );
+		if ( id!==false ) {
+			t = document.getElementById( id );
 		}
 
-		if ( o.tid ) {
-			var t = document.getElementById( o.tid );
-			o["target"] = t;
-		}
+		var o = { 
+			n		: n,
+			rel		: rel,
+			id		: id,
+			target	: t
+		};
 
 		return o;
 

@@ -125,7 +125,7 @@ var ALCounter = ( function( domain ) {
 	helper.loadTemplate(type);
 	
 	function modifyCounterByLink( a, inc ) {
-		var counter = counters[a.tid];
+		var counter = counters[a.id];
 
 		counter.modify( inc );
 		return false;

@@ -63,12 +63,12 @@ describe("FastButtonListener", function() {
 	
 	var fakeElement = (function(){
 		var attribs = {
-				"data-action": "testAction",
-				"data-tid": false
+				"rel"	: "testAction",
+				"href"	: ""
 		};
 		
 		return {
-			nodeName:"b",
+			nodeName:"a",
 			getAttribute: function( att ) {
 				return attribs[att];
 			}
