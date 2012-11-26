@@ -26,13 +26,6 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		events			= eventsGlobal,
 		dataAttributes	= [ "action", "tid" ]; //list of data-* attributes we want to access
 
-	var TYPE = {
-			CLICK		: 1,
-			TOUCH_START	: 2,
-			TOUCH_MOVE	: 4,
-			TOUCH_END	: 8
-	}
-
 	//Setup some extra touch handlers and init the right info
 	function handleTouchStart(e) {
 
@@ -64,7 +57,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 				t = e.target||e.srcElement;
 			
 			if ( startNode && startNode === t ) {
-				handleClick( e, TYPE.TOUCH_END );
+				handleClick( e );
 			}
 			startNode = false;
 	
@@ -74,14 +67,14 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		return events.cancel( e );
 	}
 
-	function handleClick( e, type ) {
+	function handleClick( e ) {
 
 		var e = e||event,
 			t = e.target||e.srcElement;
 
 		var a = validateNode( t );
 		if ( a !== false ) {
-			var r = handlers[a.action]( a, type );
+			var r = handlers[a.action]( a );
 		}
 
 	}
@@ -113,7 +106,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 	}
 
-	function parseNode( n, type ) {
+	function parseNode( n ) {
 
 		var o = { n: n };
 
@@ -148,7 +141,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		 */
 		var ft = function( e ) {
 			touchTime = new Date().getTime();
-			handleTouchStart( e, TYPE.TOUCH );
+			handleTouchStart( e );
 		};
 
 		/**
@@ -160,7 +153,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		var fm = function( e ) {
 			var now = new Date().getTime();
 			if ( now - touchTime > 500 ) {
-				handleTouchStart( e, TYPE.TOUCH );
+				handleTouchStart( e );
 			}
 		}
 
