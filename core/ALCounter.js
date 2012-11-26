@@ -125,19 +125,16 @@ var ALCounter = ( function( domain ) {
 	helper.loadTemplate(type);
 	
 	function modifyCounterByLink( a, inc ) {
-		var href = a.getAttribute("href"),
-			indx = href.indexOf( '#' ),
-			id = href.substr( indx + 1 ),
-			counter = counters[id];
+		var counter = counters[a.id];
 
 		counter.modify( inc );
 		return false;
 	}
 	
-	LinkListener.addHandler( "countUp", function( a ) {
+	FastButtonListener.addHandler( "countUp", function( a ) {
 		return modifyCounterByLink( a, 1 );
 	});
-	LinkListener.addHandler( "countDown", function( a ) {
+	FastButtonListener.addHandler( "countDown", function( a ) {
 		return modifyCounterByLink( a, -1 );
 	});
 
