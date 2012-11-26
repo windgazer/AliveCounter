@@ -18,6 +18,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 
 	var re 				= /^b$/i,
 		startNode		= false,
+		touchTime		= 0,
 		body			= document.documentElement||document.body,
 		handlers		= {},
 		touchEnd		= false,
@@ -141,19 +142,22 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 		 * had to set the delay to 150 milliseconds. At this speed my test-devices
 		 * did not register ghost-clicks and the responsiveness was acceptable.
 		 */
-		var race = true;
 		
-		var f = function( e ) {
-			if (race) {
-				race = false;
-				window.setTimeout( function(){ race = true; }, 150 );
+		var ft = function( e ) {
+			touchTime = new Date().getTime();
+			handleTouchStart( e, TYPE.TOUCH );
+		};
+		
+		var fm = function( e ) {
+			var now = new Date().getTime();
+			if ( now - touchTime > 250 ) {
 				handleTouchStart( e, TYPE.TOUCH );
 			}
-		};
+		}
 
-		var LinkListenerClick = events.attach( body, "mousedown", f );
+		var LinkListenerClick = events.attach( body, "mousedown", fm );
 
-		var LinkListenerTouch = events.attach( body, "touchstart", f );
+		var LinkListenerTouch = events.attach( body, "touchstart", ft );
 
 	}
 
@@ -170,6 +174,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 			},
 			endDebug: function() {
 				reset();
+				touchTime = 0;
 				events = this.eventsOrigin;
 			}
 
