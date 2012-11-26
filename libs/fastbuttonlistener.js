@@ -16,7 +16,7 @@
 
 var FastButtonListener = ( function( w, document, eventsGlobal ){
 
-	var re 				= /^b$/i,
+	var re 				= /^b|a$/i,
 		startNode		= false,
 		touchTime		= 0,
 		body			= document.documentElement||document.body,
