@@ -46,10 +46,7 @@ var FastButtonListener = ( function( w, document, eventsGlobal ){
 			var race = true;
 			//Add touch handlers
 			var f = function( e ) {
-				if (race) {
-					race = false;
-					handleTouchEnd(e);
-				}
+				handleTouchEnd(e);
 			}
 			touchEnd = events.attach( body, "touchend", f );
 			//Add touch handlers
