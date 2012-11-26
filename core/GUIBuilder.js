@@ -78,6 +78,7 @@ var GUIBuilder = (function( domain ) {
 	render();
 
 	return {
+
 		isTemplateQueueEmpty:isTemplateQueueEmpty,
 		render: render,
 		setRoot: function( guid ) {
@@ -92,6 +93,7 @@ var GUIBuilder = (function( domain ) {
 		getTemplate: function() {
 			return template;
 		}
+
 	};
 
 })( windgazer );
