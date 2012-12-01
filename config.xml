@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" height="240" width="320"
-	viewmodes="floating fullscreen maximized windowed">
+<widget
+	xmlns		="http://www.w3.org/ns/widgets"
+	xmlns:gap	= "http://phonegap.com/ns/1.0"
+	height		="240"
+	width		="320"
+	viewmodes	="floating fullscreen maximized windowed"
+	id			= "nl.windgazer.alivecounter"
+	versionCode	="2"
+	version		= "0.1.1">
 	<name short="AliveCounter">Alive Counter</name>
 	<description>
 		A counter for any type of resources during a card/board game.
 	</description>
 	<author email="martin@windgazer.nl"
-		href="http://oss.windgazer.nl">
+		href="http://oss.windgazer.nl/AliveCounter/">
 		Martin Reurings
 	</author>
 	<license href="http://opensource.org/licenses/MIT">
