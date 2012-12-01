@@ -16,6 +16,11 @@
 		href="http://oss.windgazer.nl/AliveCounter/">
 		Martin Reurings
 	</author>
+	<preference name="orientation" value="default" />
+	<preference name="fullscreen" value="true" />
+	<preference name="splash-screen-duration" value="1000" />
+	<gap:splash src="assets/icon.png" />
+	<preference name="permissions" value="none"/>
 	<license href="http://opensource.org/licenses/MIT">
 		The MIT License (MIT) Copyright (c) 2012 Windgazer.nl
 
