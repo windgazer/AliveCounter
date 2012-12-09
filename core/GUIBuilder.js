@@ -2,7 +2,8 @@ window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
 var GUIBuilder = (function( domain ) {
 
-	var id = "content",
+	var defaultId = "content",
+		id = defaultId,
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 		dblclick = false;
 
