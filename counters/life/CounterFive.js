@@ -25,7 +25,7 @@ var CounterFive = ( function( domain ) {
 		}
 	});
 	
-	helper.addType( type, counterFiveClass );
+	domain.ALCounterHelper.addType( type, counterFiveClass );
 
 	return counterFiveClass;
 
