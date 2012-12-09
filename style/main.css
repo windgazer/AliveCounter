@@ -156,7 +156,7 @@ menu > li > a {
 
 [rel*="count"] {
 	position: absolute;
-	color: rgba(0, 0, 0, 0.25);
+	color: rgba(64, 64, 64, 0.5);
 	text-align: center;
 	vertical-align: middle;
 	left: 0;
