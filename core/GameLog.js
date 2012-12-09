@@ -14,6 +14,7 @@ var GameLog = (function( domain ) {
 					content: arguments
 			};
 			this.logs.push( entry );
+			ce.fireEvent("log.modified", entry);
 		},
 		toString: function() {
 			var out = "";
