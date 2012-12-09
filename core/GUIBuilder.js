@@ -5,13 +5,32 @@ var GUIBuilder = (function( domain ) {
 	var id = "content",
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 		dblclick = false;
+		startHash = document.location.hash;
 
+	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
 
 		render();
 		return true;
 
 	});
+	//OPTIONS---
+
+	//Prevent endless 'back'-button behavior (keeping history clean...)
+	LinkListener.addHandler( "dialogEnd", function( a ) {
+
+		//Making sure we're not still on the first page dialog that we opened with...
+		if ( document.location.hash !== startHash ) {
+			history.back(1);
+			return false;
+		} else {
+			document.location.replace( a.href );
+			startHash = document.location.hash;
+			return false;
+		}
+		return true;
+
+	} );
 
 	var isTemplateQueueEmpty = function() {
 
