@@ -2,7 +2,8 @@ window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
 var GUIBuilder = (function( domain ) {
 
-	var id = "content",
+	var defaultId = "content",
+		id = defaultId,
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 		dblclick = false;
 		startHash = document.location.hash;
@@ -42,9 +43,15 @@ var GUIBuilder = (function( domain ) {
 
 	};
 	
+	function pad( i, n ) {
+		return (1<<2).toString(2).substr(1,n-(""+i).length) + i;
+	}
+	
 	var render = function() {
 
 		if ( isTemplateQueueEmpty() ) {
+
+			ce.fireEvent("gui.render", {  });
 
 			var cnt = document.getElementById(id);
 			cnt.innerHTML = "";
@@ -91,6 +98,22 @@ var GUIBuilder = (function( domain ) {
 			node.parentNode.replaceChild( data.counter.renderTemplate(), node );
 
 		};
+
+	});
+	
+	ce.attachEvent("log.modified", function(eventType, data) {
+
+		var out = pad( data.time.getHours(), 2 ) + ":" + pad( data.time.getMinutes(), 2 ) + ":" + pad( data.time.getSeconds(), 2 ) + " - ";
+		for ( var j = 0; j < data.content.length; j++ ) {
+			if ( j > 0 ) {
+				out += " ";
+			}
+			out += JSON.stringify( data.content[j] );
+		}
+		var span = document.createElement("span");
+		span.appendChild( document.createTextNode( out ) );
+		var log = document.getElementById("log");
+		if ( log ) log.appendChild( span );
 
 	});
 
