@@ -112,6 +112,13 @@ var ALCounter = ( function( domain ) {
 
 				return counters[id];
 
+			},
+			
+			modifyCounterByLink: function( a, inc ) {
+				var counter = counters[a.id];
+
+				counter.modify( inc );
+				return false;
 			}
 			
 	};
@@ -124,18 +131,11 @@ var ALCounter = ( function( domain ) {
 	
 	helper.loadTemplate(type);
 	
-	function modifyCounterByLink( a, inc ) {
-		var counter = counters[a.id];
-
-		counter.modify( inc );
-		return false;
-	}
-	
 	FastButtonListener.addHandler( "countUp", function( a ) {
-		return modifyCounterByLink( a, 1 );
+		return helper.modifyCounterByLink( a, 1 );
 	});
 	FastButtonListener.addHandler( "countDown", function( a ) {
-		return modifyCounterByLink( a, -1 );
+		return helper.modifyCounterByLink( a, -1 );
 	});
 
 	var alcounterClass = Class.extend({
