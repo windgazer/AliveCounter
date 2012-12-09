@@ -41,7 +41,8 @@ header,
 menu,
 .counter,
 footer,
-.dialogEnd {
+.dialogEnd,
+.log {
 	background: rgba(0, 0, 0, 0.65);
 	border-color: rgba(0, 0, 0, 0.75);
 	border-style: solid;
@@ -186,6 +187,47 @@ menu > li > a {
 	margin: 3.5em 0 1.7em;
 	position: relative;
 	z-index: 5;
+}
+
+.log {
+	position: absolute;
+	height: 1.5em;
+	bottom: 0;
+	border-width: 0.2em 0.2em 0;
+	border-radius: 0.5em 0.5em 0 0;
+	padding: 0 0.5em;
+	margin: 0 0 0 1em;
+	overflow: auto;
+	z-index: 25;
+}
+
+.log > span {
+	display: none;
+}
+
+.log:target {
+	height: 23em;
+	left: 1em;
+	right: 1em;
+	margin: 0;
+
+	-webkit-transition: height 500ms ease-out;
+	-moz-transition: height 500ms ease-out;
+	-o-transition: height 500ms ease-out;
+	transition: height 500ms ease-out;
+}
+.log:target > span {
+	display: block;
+}
+.log > a:first-child,
+.log:target > a + a {
+	display: block;
+}
+
+.log:target > a,
+.log > a {
+	display: none;
+	text-align: center;
 }
 
 footer {
