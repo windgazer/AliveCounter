@@ -79,6 +79,52 @@ describe("GameLog", function() {
 	});
 	
 	it("Groups multiple modifications on a single counter", function() {
+
+		var uid = null,
+			counters = window.windgazer.counters,
+			orgLength = 0,
+			guids = new Array();
+
+		runs( function() {
+			
+			GameLog.clearLog();
+	
+			for ( var cntr in counters ){
+				if ( counters.hasOwnProperty( cntr ) ) {
+					guids.push(cntr);
+				}
+			}
+			
+			var uid = guids[0];
+			
+			var cntr1 = counters[uid],
+				cntr2 = counters[guids[1]];
+			
+			orgLength = GameLog.getLog().split("\n").length;
+	
+			cntr1.modify(5);
+			cntr1.modify(2);
+			cntr1.modify(-3);
+
+		});
+		
+		waitsFor( function() {
+
+			var nl = GameLog.getLog().split("\n").length;
+			return nl > orgLength;
+
+		}, "The counter should have been incremented", 7500);
+
+		runs( function() {
+
+			var log1 = GameLog.getLog();
+			
+			var count = log1.split("\n").length;
+			//var newValue = cntr1.getValue();
+			
+			expect(count).toBe(3);
+
+		});
 		
 	});
 
