@@ -161,7 +161,7 @@ var ALCounter = ( function( domain ) {
 		},
 		modify: function( inc ) {
 			this.value = this.value + inc;
-			ce.fireEvent("counter.modified", { id: this.id, counter: this });
+			ce.fireEvent("counter.modified", { id: this.id, counter: this, inc: inc });
 		},
 		renderTemplate: function( node ) {
 			var doc = document.createDocumentFragment(),
