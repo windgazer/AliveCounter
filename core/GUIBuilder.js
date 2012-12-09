@@ -28,6 +28,8 @@ var GUIBuilder = (function( domain ) {
 
 		if ( isTemplateQueueEmpty() ) {
 
+			ce.fireEvent("gui.render", {  });
+
 			var cnt = document.getElementById(id);
 			cnt.innerHTML = "";
 			
