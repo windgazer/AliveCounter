@@ -1,6 +1,6 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
-var ALCounter = ( function( domain ) {
+var CounterFive = ( function( domain ) {
 
 	var uidI = 0,
 		type = "CounterFive";
