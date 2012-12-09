@@ -112,6 +112,13 @@ var ALCounter = ( function( domain ) {
 
 				return counters[id];
 
+			},
+			
+			modifyCounterByLink: function( a, inc ) {
+				var counter = counters[a.id];
+
+				counter.modify( inc );
+				return false;
 			}
 			
 	};
@@ -124,18 +131,11 @@ var ALCounter = ( function( domain ) {
 	
 	helper.loadTemplate(type);
 	
-	function modifyCounterByLink( a, inc ) {
-		var counter = counters[a.id];
-
-		counter.modify( inc );
-		return false;
-	}
-	
 	FastButtonListener.addHandler( "countUp", function( a ) {
-		return modifyCounterByLink( a, 1 );
+		return helper.modifyCounterByLink( a, 1 );
 	});
 	FastButtonListener.addHandler( "countDown", function( a ) {
-		return modifyCounterByLink( a, -1 );
+		return helper.modifyCounterByLink( a, -1 );
 	});
 
 	var alcounterClass = Class.extend({
@@ -161,7 +161,7 @@ var ALCounter = ( function( domain ) {
 		},
 		modify: function( inc ) {
 			this.value = this.value + inc;
-			ce.fireEvent("counter.modified", { id: this.id, counter: this });
+			ce.fireEvent("counter.modified", { id: this.id, counter: this, inc: inc });
 		},
 		renderTemplate: function( node ) {
 			var doc = document.createDocumentFragment(),
