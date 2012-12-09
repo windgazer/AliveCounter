@@ -11,48 +11,9 @@ var HTTPRequest = (function() {
 	};
 
 	/**
-	 * This wrapper is an 'easy' way to handle XMLHttpRequests, otherwise known as AJAX.
-	 * If you intend to use threaded (multiple / simultanious) request you are required
-	 * to supply a changeHandler upon creation of a new wrapper. A changeHandler will
-	 * be called when the request changes and it will be passed the wrapper object.
 	 * 
-	 * From this changeHandler you should inspect the result, for istance check it's readyState
-	 * and/or status. When it's finished you may act upon the arrived data. Example:
-	 * 
-	 * <pre>	var RequestHandler = function(requestWrapper) {
-			var httpRequest = requestWrapper.httpRequest;
-			var target = requestWrapper.target;
-			// Completed httpRequest
-			if (httpRequest.readyState==4) {
-				// Switch status values
-				switch (httpRequest.status) {
-					case 200: var xml = httpRequest.responseXML;
-						try {
-							if (xml.firstChild) {
-								alert("Woohoo, we did something hip, we got XML loaded in the background!");
-							} else alert("Response is discarded due to not containing xml.");
-						} catch (exception) {
-							alert("Response is discarded due to not containing xml.\n" + httpRequest.responseText);
-						}
-						break;
-					case 0: alert("Filesystem handling has been disabled.");
-						break;
-					default: alert("Problem retrieving XML data: " + httpRequest.status);
-				}
-			}
-		};
-		var wrapper = new HttpRequestWrapper(RequestHandler);
-		wrapper.doGet("index.html", null);</pre>
-	 * 
-	 * When you intend to only use non-threaded calls, like getXML and getText, there is no
-	 * need to supply a changeHandler, null will suffice. It is discouraged to use these
-	 * methods, but one must at times break common practice and I see no need to exclude
-	 * the convenience of these methods.
-	 * 
-	 * @param {function} changeHandler A function which will be called upon when the status of the request changes
-	 * @param {boolean} debug A boolean to indicate you want debug messages chown, defaults to false.
 	 * @author Martin 'Windgazer' Reurings
-	 * @version 1.0.070721
+	 * @version 2.0.121207
 	 * @constructor
 	 */
 	function HttpRequestWrapper( onSuccess, debug ) {
