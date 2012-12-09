@@ -2,12 +2,7 @@ window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
 var CounterFive = ( function( domain ) {
 
-	var uidI = 0,
-		type = "CounterFive";
-
-	function generateUID() {
-		return type + uidI++;
-	};
+	var type = "CounterFive";
 	
 	domain.ALCounterHelper.loadTemplate(type);
 	
