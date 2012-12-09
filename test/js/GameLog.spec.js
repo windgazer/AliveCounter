@@ -52,6 +52,30 @@ describe("GameLog", function() {
 	
 	it("Logs a counter modification", function() {
 		
+		var log1 = GameLog.getLog();
+		var counters = window.windgazer.counters;
+
+		for ( var cntr in counters ){
+			if ( counters.hasOwnProperty( cntr ) ) {
+				cntr = counters[cntr];
+				cntr.modify( 1 );
+			}
+		}
+		var log2 = GameLog.getLog();
+
+		expect(log1).not.toBe(log2);
+
+	});
+	
+	it("Can forcibly clear the log", function() {
+
+		GameLog.clearLog();
+		var log1 = GameLog.getLog();
+		
+		var count = log1.split("\n").length;
+		
+		expect(count).toBe(2);
+
 	});
 	
 	it("Groups multiple modifications on a single counter", function() {

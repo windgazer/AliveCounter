@@ -45,6 +45,9 @@ var GameLog = (function( domain ) {
 	return {
 		getLog: function() {
 			return logger.toString();
+		},
+		clearLog: function() {
+			logger = new Logger();
 		}
 	};
 
