@@ -41,7 +41,8 @@ header,
 menu,
 .counter,
 footer,
-.dialogEnd {
+.dialogEnd,
+.log {
 	background: rgba(0, 0, 0, 0.65);
 	border-color: rgba(0, 0, 0, 0.75);
 	border-style: solid;
@@ -156,7 +157,7 @@ menu > li > a {
 
 [rel*="count"] {
 	position: absolute;
-	color: rgba(0, 0, 0, 0.25);
+	color: rgba(64, 64, 64, 0.5);
 	text-align: center;
 	vertical-align: middle;
 	left: 0;
@@ -188,6 +189,47 @@ menu > li > a {
 	z-index: 5;
 }
 
+.log {
+	position: absolute;
+	height: 1.5em;
+	bottom: 0;
+	border-width: 0.2em 0.2em 0;
+	border-radius: 0.5em 0.5em 0 0;
+	padding: 0 0.5em;
+	margin: 0 0 0 1em;
+	overflow: auto;
+	z-index: 25;
+}
+
+.log > span {
+	display: none;
+}
+
+.log:target {
+	height: 23em;
+	left: 1em;
+	right: 1em;
+	margin: 0;
+
+	-webkit-transition: height 500ms ease-out;
+	-moz-transition: height 500ms ease-out;
+	-o-transition: height 500ms ease-out;
+	transition: height 500ms ease-out;
+}
+.log:target > span {
+	display: block;
+}
+.log > a:first-child,
+.log:target > a + a {
+	display: block;
+}
+
+.log:target > a,
+.log > a {
+	display: none;
+	text-align: center;
+}
+
 footer {
 	position: fixed;
 	bottom: 0;
@@ -197,6 +239,29 @@ footer {
 	text-align: right;
 	padding: 0.25em;
 }
+
+/*CounterFive*/
+
+.CounterFive {
+}
+.CounterFive > [rel*="count"] {
+	left: 50%;
+}
+.CounterFive > [rel*="countFive"] {
+	left: 0;
+	right: 50%;
+}
+[rel="countFiveUp"] {
+	top: 0;
+	bottom: 50%;
+}
+[rel="countFiveDown"] {
+	padding: 0.75em 0 0;
+	top: 50%;
+	bottom: 0;
+}
+
+/*/CounterFive*/
 
 /*Orientation based modifications*/
 .orientation_landscape > .counters_2 {
