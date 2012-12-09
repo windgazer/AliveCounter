@@ -198,6 +198,29 @@ footer {
 	padding: 0.25em;
 }
 
+/*CounterFive*/
+
+.CounterFive {
+}
+.CounterFive > [rel*="count"] {
+	left: 50%;
+}
+.CounterFive > [rel*="countFive"] {
+	left: 0;
+	right: 50%;
+}
+[rel="countFiveUp"] {
+	top: 0;
+	bottom: 50%;
+}
+[rel="countFiveDown"] {
+	padding: 0.75em 0 0;
+	top: 50%;
+	bottom: 0;
+}
+
+/*/CounterFive*/
+
 /*Orientation based modifications*/
 .orientation_landscape > .counters_2 {
 	white-space: nowrap;
