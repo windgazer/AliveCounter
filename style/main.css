@@ -263,8 +263,11 @@ footer {
 /*/CounterFive*/
 
 /*Orientation based modifications*/
-.orientation_portrait > .content > .counter {
-	width: 35%;
+.orientation_portrait > .content > .counter,
+.orientation_landscape > .counters_2 > .counter {
+	width: 30%;
+	padding-top: 3em;
+	padding-bottom: 3em;
 }
 
 .orientation_landscape > .content > .counter {
