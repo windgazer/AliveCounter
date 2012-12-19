@@ -19,7 +19,7 @@ h1, h2, h3, h4, p {
 }
 
 h1, h2, h3, h4 {
-	font-family: "mtg-regular", serif;
+	font-family: georgia, serif;
 }
 
 a {
@@ -28,13 +28,12 @@ a {
 }
 
 body {
-	color: white;
-	background: white url(../assets/MTG4c.png) no-repeat 50% 50%;
-	background-size: 75% auto;
-	-webkit-transition: all 2s ease-in-out;
-	-moz-transition: all 2s ease-in-out;
-	-o-transition: all 2s ease-in-out;
-	transition: all 2s ease-in-out;
+	color: black;
+	background-color: rgba( 32, 32, 32, 1 );
+	-webkit-transition: font 2s ease-in-out;
+	-moz-transition: font 2s ease-in-out;
+	-o-transition: font 2s ease-in-out;
+	transition: font 2s ease-in-out;
 }
 
 header,
@@ -43,8 +42,8 @@ menu,
 footer,
 .dialogEnd,
 .log {
-	background: rgba(0, 0, 0, 0.65);
-	border-color: rgba(0, 0, 0, 0.75);
+	background: rgba( 240, 240, 128, 0.65 );
+	border-color: rgba( 240, 240, 128, 0.75 );
 	border-style: solid;
 	border-width: 0;
 }
@@ -140,12 +139,12 @@ menu > li > a {
 }
 
 .counter {
-	font-size: 200%;
+	font-size: 175%;
 	border-width: 0.2em;
 	border-radius: 0.5em;
 	padding: 0.25em;
 	float: left;
-	margin: 0.25em;
+	margin: 1.15em 0em 0 0.75em;
 	position: relative;
 }
 
@@ -184,13 +183,13 @@ menu > li > a {
 }
 
 .content {
-	margin: 3.5em 0 1.7em;
+	margin: 1.35em 0 2em;
 	position: relative;
 	z-index: 5;
 }
 
 .log {
-	position: absolute;
+	position: fixed;
 	height: 1.5em;
 	bottom: 0;
 	border-width: 0.2em 0.2em 0;
@@ -264,23 +263,17 @@ footer {
 /*/CounterFive*/
 
 /*Orientation based modifications*/
-.orientation_landscape > .counters_2 {
-	white-space: nowrap;
-	text-align: center;
-}
-.orientation_landscape > .counters_2 > .counter {
-	font-size: 375%;
-	float: none;
-	display: inline-block;
-}
-.orientation_portrait > .counters_2 > .counter {
-	font-size: 200%;
-	display: block;
-	width: auto;
-	margin: 1em;
-	float: none;
+.orientation_portrait > .content > .counter {
+	width: 35%;
 }
 
+.orientation_landscape > .content > .counter {
+	display: inline-block;
+	float: none;
+}
+.orientation_landscape > .content {
+	text-align: center;
+}
 
 /* Float clears */
 .content:after,
@@ -290,4 +283,5 @@ header:after {
 	clear: both;
 	width: 0;
 	height: 0;
+	visibility: hidden;
 }
