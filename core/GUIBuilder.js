@@ -6,7 +6,8 @@ var GUIBuilder = (function( domain ) {
 		id = defaultId,
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 		dblclick = false;
-		startHash = document.location.hash;
+		startHash = document.location.hash,
+		logStash = new Array();
 
 	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
