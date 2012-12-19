@@ -43,7 +43,7 @@ var GameLog = (function( domain ) {
 
 		var cntr = domain.counters[tuid];
 		try {
-			logger.log( cntr.getTitle() + ": " +  ttotal + " => " + cntr.getValue() );
+			logger.log( ttotal, cntr.getValue(), cntr.getTitle() );
 		} catch ( whatever ) {}
 		tuid = null;
 		ttotal = 0;

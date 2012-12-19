@@ -19,7 +19,7 @@ h1, h2, h3, h4, p {
 }
 
 h1, h2, h3, h4 {
-	font-family: "mtg-regular", serif;
+	font-family: georgia, serif;
 }
 
 a {
@@ -28,13 +28,12 @@ a {
 }
 
 body {
-	color: white;
-	background: white url(../assets/MTG4c.png) no-repeat 50% 50%;
-	background-size: 75% auto;
-	-webkit-transition: all 2s ease-in-out;
-	-moz-transition: all 2s ease-in-out;
-	-o-transition: all 2s ease-in-out;
-	transition: all 2s ease-in-out;
+	color: black;
+	background-color: rgba( 32, 32, 32, 1 );
+	-webkit-transition: font 2s ease-in-out;
+	-moz-transition: font 2s ease-in-out;
+	-o-transition: font 2s ease-in-out;
+	transition: font 2s ease-in-out;
 }
 
 header,
@@ -43,8 +42,8 @@ menu,
 footer,
 .dialogEnd,
 .log {
-	background: rgba(0, 0, 0, 0.65);
-	border-color: rgba(0, 0, 0, 0.75);
+	background: rgba( 240, 240, 128, 0.65 );
+	border-color: rgba( 240, 240, 128, 0.75 );
 	border-style: solid;
 	border-width: 0;
 }
@@ -140,12 +139,12 @@ menu > li > a {
 }
 
 .counter {
-	font-size: 200%;
+	font-size: 175%;
 	border-width: 0.2em;
 	border-radius: 0.5em;
 	padding: 0.25em;
 	float: left;
-	margin: 0.25em;
+	margin: 1.15em 0em 0 0.75em;
 	position: relative;
 }
 
@@ -159,9 +158,9 @@ menu > li > a {
 	position: absolute;
 	color: rgba(64, 64, 64, 0.5);
 	text-align: center;
-	vertical-align: middle;
 	left: 0;
-	right: 0;
+	width: 100%;
+	padding: 0.5em 0;
 	text-decoration: none;
 	-webkit-transition: color 500ms ease-in-out;
 	-moz-transition: color 500ms ease-in-out;
@@ -175,34 +174,48 @@ menu > li > a {
 }
 [rel="countUp"] {
 	top: 0;
-	bottom: 50%;
 }
 [rel="countDown"] {
-	padding: 0.75em 0 0;
-	top: 50%;
 	bottom: 0;
 }
 
 .content {
-	margin: 3.5em 0 1.7em;
+	margin: 1.35em 0 2em;
 	position: relative;
 	z-index: 5;
 }
 
 .log {
-	position: absolute;
+	position: fixed;
 	height: 1.5em;
 	bottom: 0;
 	border-width: 0.2em 0.2em 0;
 	border-radius: 0.5em 0.5em 0 0;
 	padding: 0 0.5em;
 	margin: 0 0 0 1em;
-	overflow: auto;
+	color: white;
 	z-index: 25;
 }
 
-.log > span {
+.log > table {
 	display: none;
+	position: absolute;
+	top: 2em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.log td {
+	display: none;
+}
+.log tbody {
+	position: absolute;
+	top: 3em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
 }
 
 .log:target {
@@ -210,14 +223,18 @@ menu > li > a {
 	left: 1em;
 	right: 1em;
 	margin: 0;
+	padding-bottom: 0.1em;
 
 	-webkit-transition: height 500ms ease-out;
 	-moz-transition: height 500ms ease-out;
 	-o-transition: height 500ms ease-out;
 	transition: height 500ms ease-out;
 }
-.log:target > span {
-	display: block;
+.log:target > table {
+	display: table;
+}
+.log:target td {
+	display: table-cell;
 }
 .log > a:first-child,
 .log:target > a + a {
@@ -228,6 +245,36 @@ menu > li > a {
 .log > a {
 	display: none;
 	text-align: center;
+}
+
+.log tr:nth-child(2n + 0) {
+	background: rgba( 64, 64, 64, 0.70 );
+}
+
+.log tr:nth-child(2n + 1) {
+	background: rgba( 16, 16, 16, 0.70 );
+}
+
+.log tbody td:nth-child(4n + 3),
+.log tbody td:nth-child(4n + 2) {
+	background: rgba( 255, 255, 255, 0.20 );
+}
+
+.log td {
+	width: 4ex;
+}
+
+.log td[colspan] {
+	width: 8ex;
+}
+
+.log th {
+	width: 10ex;
+	font-weight: normal;
+}
+
+.log .free {
+	width: auto;
 }
 
 footer {
@@ -245,42 +292,69 @@ footer {
 .CounterFive {
 }
 .CounterFive > [rel*="count"] {
-	left: 50%;
+	width: 50%;
 }
 .CounterFive > [rel*="countFive"] {
-	left: 0;
-	right: 50%;
+	left: auto;
+	right: 0;
 }
 [rel="countFiveUp"] {
 	top: 0;
-	bottom: 50%;
 }
 [rel="countFiveDown"] {
-	padding: 0.75em 0 0;
-	top: 50%;
 	bottom: 0;
 }
 
 /*/CounterFive*/
 
 /*Orientation based modifications*/
-.orientation_landscape > .counters_2 {
-	white-space: nowrap;
-	text-align: center;
-}
+.orientation_portrait > .content > .counter,
 .orientation_landscape > .counters_2 > .counter {
-	font-size: 375%;
-	float: none;
-	display: inline-block;
+	width: 30%;
 }
+
 .orientation_portrait > .counters_2 > .counter {
-	font-size: 200%;
-	display: block;
-	width: auto;
-	margin: 1em;
+	width: 70%;
+}
+
+.orientation_portrait > .counters_2 > .counter,
+.orientation_landscape > .content > .counter {
+	display: inline-block;
 	float: none;
 }
 
+.orientation_landscape > .counters_2 > .counter {
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.orientation_portrait > .counters_2 > .counter {
+	position: absolute;
+	top: 0em;
+	bottom: 50%;
+	left: 1em;
+	right: 1em;
+	margin-top: 0.5em;
+	padding-top: 0.75em;
+}
+
+.orientation_portrait > .counters_2 > .counter + .counter {
+	top: 50%;
+	bottom: 0;
+}
+
+.orientation_portrait > .counters_2 {
+	position: absolute;
+	top: 1.25em;
+	bottom: 0.5em;
+	left: 0;
+	right: 0;
+}
+
+.orientation_portrait > .counters_2,
+.orientation_landscape > .content {
+	text-align: center;
+}
 
 /* Float clears */
 .content:after,
@@ -290,4 +364,5 @@ header:after {
 	clear: both;
 	width: 0;
 	height: 0;
+	visibility: hidden;
 }
