@@ -7,7 +7,7 @@
 	viewmodes	="floating fullscreen maximized windowed"
 	id			= "nl.windgazer.alivecounter"
 	versionCode	="3"
-	version		= "0.1.2">
+	version		= "0.1.3">
 	<name short="AliveCounter">Alive Counter</name>
 	<description>
 		A counter for any type of resources during a card/board game.
