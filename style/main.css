@@ -158,9 +158,9 @@ menu > li > a {
 	position: absolute;
 	color: rgba(64, 64, 64, 0.5);
 	text-align: center;
-	vertical-align: middle;
 	left: 0;
-	right: 0;
+	width: 100%;
+	padding: 0.5em 0;
 	text-decoration: none;
 	-webkit-transition: color 500ms ease-in-out;
 	-moz-transition: color 500ms ease-in-out;
@@ -174,11 +174,8 @@ menu > li > a {
 }
 [rel="countUp"] {
 	top: 0;
-	bottom: 50%;
 }
 [rel="countDown"] {
-	padding: 0.75em 0 0;
-	top: 50%;
 	bottom: 0;
 }
 
@@ -244,19 +241,16 @@ footer {
 .CounterFive {
 }
 .CounterFive > [rel*="count"] {
-	left: 50%;
+	width: 50%;
 }
 .CounterFive > [rel*="countFive"] {
-	left: 0;
-	right: 50%;
+	left: auto;
+	right: 0;
 }
 [rel="countFiveUp"] {
 	top: 0;
-	bottom: 50%;
 }
 [rel="countFiveDown"] {
-	padding: 0.75em 0 0;
-	top: 50%;
 	bottom: 0;
 }
 
@@ -266,14 +260,46 @@ footer {
 .orientation_portrait > .content > .counter,
 .orientation_landscape > .counters_2 > .counter {
 	width: 30%;
-	padding-top: 3em;
-	padding-bottom: 3em;
 }
 
+.orientation_portrait > .counters_2 > .counter {
+	width: 70%;
+}
+
+.orientation_portrait > .counters_2 > .counter,
 .orientation_landscape > .content > .counter {
 	display: inline-block;
 	float: none;
 }
+
+.orientation_landscape > .counters_2 > .counter {
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.orientation_portrait > .counters_2 > .counter {
+	position: absolute;
+	top: 0em;
+	bottom: 50%;
+	left: 1em;
+	right: 1em;
+	margin-top: 0.5em;
+}
+
+.orientation_portrait > .counters_2 > .counter + .counter {
+	top: 50%;
+	bottom: 0;
+}
+
+.orientation_portrait > .counters_2 {
+	position: absolute;
+	top: 1.25em;
+	bottom: 0.5em;
+	left: 0;
+	right: 0;
+}
+
+.orientation_portrait > .counters_2,
 .orientation_landscape > .content {
 	text-align: center;
 }
