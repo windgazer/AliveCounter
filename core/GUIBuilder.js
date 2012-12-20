@@ -6,7 +6,8 @@ var GUIBuilder = (function( domain ) {
 		id = defaultId,
 		template = typeof nl_windgazer_template==="undefined"?"":nl_windgazer_template;
 		dblclick = false;
-		startHash = document.location.hash;
+		startHash = document.location.hash,
+		logStash = new Array();
 
 	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
@@ -68,7 +69,7 @@ var GUIBuilder = (function( domain ) {
 			for (var i = 0; i < template.length; i++ ) {
 
 				var ct = template[ i ];
-				var t = windgazer.ALCounterHelper.getType(ct.type);
+				var t = windgazer.ALCounterHelper.getType( ct.type );
 				var c = new t({
 					title: ct.title,
 					value: ct.value
@@ -101,19 +102,96 @@ var GUIBuilder = (function( domain ) {
 
 	});
 	
+	function setupLogTable( table ) {
+
+		var tr = table.appendChild( document.createElement("thead") ).
+			appendChild( document.createElement("tr") );
+
+		tr.appendChild( document.createElement( "th" ) ).
+			appendChild( document.createTextNode( "" ) );
+
+		for (var i = 0; i < template.length; i++ ) {
+			var ct = template[ i ];
+			var cell = tr.appendChild( document.createElement( "td" ) );
+			cell.setAttribute("colspan", 2);
+			cell.appendChild( document.createTextNode( ct.title ) );
+		}
+
+	};
+	
+	function createEntry( data ) {
+
+		var timeString = pad( data.time.getHours(), 2 ) + ":" + pad( data.time.getMinutes(), 2 ) + ":" + pad( data.time.getSeconds(), 2 ),
+	    	dataEntry = data.content,
+	    	dataEntered = false;
+
+		//Create a new table-row with log-entry data
+		var entry = document.createElement("tr");
+
+		entry.appendChild( document.createElement( "th" ) ).
+			appendChild( document.createTextNode( timeString ) );
+
+		for (var i = 0; i < template.length; i++ ) {
+			var ct = template[ i ],
+				inc = false,
+				total = false;
+			
+			if ( ct.title == dataEntry[2] ) {
+				inc = dataEntry[0];
+				total = dataEntry[1];
+				dataEntered = true;
+			}
+			entry.appendChild( document.createElement( "td" ) ).
+				appendChild( document.createTextNode( inc===false?"":inc ) );
+			entry.appendChild( document.createElement( "td" ) ).
+				appendChild( document.createTextNode( total===false?"":total ) );
+		}
+
+		if ( !dataEntered ) {
+			var cell = entry.appendChild( document.createElement( "td" ) );
+			cell.className = "free";
+			cell.appendChild( document.createTextNode( dataEntry[0] ) );
+		}
+
+		return entry;
+		
+	};
+	
+	function parseLog( data ) {
+
+		var table = document.querySelector("#log table");
+
+		var entry = createEntry( data );
+
+		var log = document.querySelector("#log tbody");
+
+		//Create the table contents if not available
+		if ( !log ) {
+
+			setupLogTable( table );
+
+			log = table.appendChild( document.createElement("tbody") );
+
+		}
+		if ( log ) log.appendChild( entry );
+		
+
+	};
+	
 	ce.attachEvent("log.modified", function(eventType, data) {
 
-		var out = pad( data.time.getHours(), 2 ) + ":" + pad( data.time.getMinutes(), 2 ) + ":" + pad( data.time.getSeconds(), 2 ) + " - ";
-		for ( var j = 0; j < data.content.length; j++ ) {
-			if ( j > 0 ) {
-				out += " ";
+		var table = document.querySelector("#log table");
+
+
+		if ( !table ) {
+			logStash.push(data);
+		} else {
+			var d = null;
+			while ( d = logStash.shift() ) {
+				parseLog( d );
 			}
-			out += JSON.stringify( data.content[j] );
+			parseLog( data );
 		}
-		var span = document.createElement("span");
-		span.appendChild( document.createTextNode( out ) );
-		var log = document.getElementById("log");
-		if ( log ) log.appendChild( span );
 
 	});
 
