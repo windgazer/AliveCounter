@@ -1,0 +1,23 @@
+{
+    "launchers": {
+        "CSSLint": {
+            "command": "csslint style"
+        }
+    },
+    "launch_in_dev": [
+        "PhantomJS",
+        "CSSLint"
+    ],
+    "src_files": [
+        "libs/**/*.js",
+        "core/**/*.js",
+        "counters/**/*.js",
+        "test/js/**/*.js"
+    ],
+    "watch_files": [
+        "**/*.css",
+        "core/**/*.js",
+        "counters/**/*.js",
+        "test/js/**/*.js"
+    ]
+}
