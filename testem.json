@@ -1,0 +1,24 @@
+{
+    "launchers": {
+        "CSSLint": {
+            "command": "csslint css"
+        }
+    },
+    "launch_in_dev": [
+        "PhantomJS",
+        "CSSLint"
+    ],
+    "src_files": [
+        "libs/a5s/rsvp/browser/rsvp.js",
+        "libs/*/*.js",
+        "libs/*.js",
+        "core/**/*.js",
+        "counters/**/*.js",
+        "test/js/**/*.js"
+    ],
+    "watch_files": [
+        "**/*.css",
+        "lib/**/*.js",
+        "test/js/**/*.js"
+    ]
+}
