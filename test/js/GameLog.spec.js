@@ -1,5 +1,6 @@
-xdescribe("GameLog", function() {
-	
+describe("GameLog", function() {
+
+    //Fake event with only those parts of an event that are required for script to work
 	var resetEvent = {
 			button: 0,
 			target: {
@@ -21,6 +22,7 @@ xdescribe("GameLog", function() {
 		var n = document.createElement("div");
 		n.id = id;
 		document.body.appendChild(n);
+		//GameLog.clearLog();
 
 	});
 
@@ -33,20 +35,34 @@ xdescribe("GameLog", function() {
 	it("Can render a string with log statements", function() {
 
 		var log = GameLog.getLog();
-		
 		expect(typeof log).toBe("string");
 
 	});
 	
 	it("Logs a game reset", function() {
 
-		var log1 = GameLog.getLog();
+	    var finished = false,
+	        log1 = GameLog.getLog();
 
-		LinkListener.handler( resetEvent );
+	    console.log("Marco");
 
-		var log2 = GameLog.getLog();
+	    runs( function() {
+	        GUIBuilder.on( "log.modified", function() {
+	            console.log("Polo");
+	            finished = true;
+	        });
+	        console.log( "Resetting" );
+	        GUIBuilder.render();
+	    } );
+        
+        waitsFor( function() {
+            return finished;
+        }, 2000, "Gotta finish rendering...");
 
-		expect(log1).not.toBe(log2);
+        runs( function() {
+    		var log2 = GameLog.getLog();
+    		expect(log1).not.toBe(log2);
+        } );
 		
 	});
 	

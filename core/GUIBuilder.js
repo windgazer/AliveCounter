@@ -8,6 +8,12 @@ var GUIBuilder = ( function( domain ) {
 		dblclick = false;
 		startHash = document.location.hash,
 		logStash = new Array();
+	    
+    function bubbleEvent( source, target, event ) {
+        source.on( event, function( e ) {
+            target.trigger( event, e );
+        } );
+    }
 
 	function GUIBuilderClass() {
 	    //Nothing for now.
@@ -15,58 +21,55 @@ var GUIBuilder = ( function( domain ) {
 
 	GUIBuilderClass.prototype = {
 
-        isTemplateQueueEmpty:isTemplateQueueEmpty,
         render: function() {
             
             var promises = new Array();
 
-            if ( isTemplateQueueEmpty() ) {
+            this.trigger("gui.render", {  });
 
-                this.trigger("gui.render", {  });
+            var cnt = document.getElementById( id );
 
-                var cnt = document.getElementById( id );
+            if ( cnt ) {
 
-                if ( cnt ) {
-
-                    cnt.innerHTML = "";
-                    
-                    if ( dblclick === false ) {
-                        dblclick = Events.attach( cnt, "dblclick", function(e) {
-                            return Events.cancel(e||Event);
-                        } );
-                        Events.attach( cnt, "selectstart", function(e) {
-                            return Events.cancel(e||Event);
-                        } );
-                    }
-        
-                    for (var i = 0; i < template.length; i++ ) {
-
-                        var ct = template[ i ],
-                            t = windgazer.ALCounterHelper.getType( ct.type ),
-                            promise = new RSVP.Promise(),
-                            c = new t({
-                                title: ct.title,
-                                value: ct.value
-                            });
-
-                        c.renderTemplate().then( function( v ) {
-
-                            cnt.appendChild( v.node );
-                            promise.resolve( { node: v.node } );
-
-                        } );
-                        
-                        promises.push( promise );
-        
-                    }
-                    
-                    cnt.className = cnt.className.replace(/ ?counters_./gi, "");
-                    cnt.className += " counters_" + template.length;
-
+                cnt.innerHTML = "";
+                
+                if ( dblclick === false ) {
+                    dblclick = Events.attach( cnt, "dblclick", function(e) {
+                        return Events.cancel(e||Event);
+                    } );
+                    Events.attach( cnt, "selectstart", function(e) {
+                        return Events.cancel(e||Event);
+                    } );
                 }
+    
+                for (var i = 0; i < template.length; i++ ) {
+
+                    var ct = template[ i ],
+                        t = windgazer.ALCounterHelper.getType( ct.type ),
+                        promise = new RSVP.Promise(),
+                        c = new t({
+                            title: ct.title,
+                            value: ct.value
+                        });
+                    
+                    bubbleEvent( c, this, "counter.modified" )
+
+                    c.renderTemplate().then( function( v ) {
+
+                        cnt.appendChild( v.node );
+                        promise.resolve( { node: v.node } );
+
+                    } );
+                    
+                    promises.push( promise );
+    
+                }
+                
+                cnt.className = cnt.className.replace(/ ?counters_./gi, "");
+                cnt.className += " counters_" + template.length;
 
             }
-            
+
             return RSVP.all( promises );
 
         },
@@ -90,7 +93,7 @@ var GUIBuilder = ( function( domain ) {
 	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
 
-		render();
+		gb.render();
 		return true;
 
 	});
@@ -111,39 +114,12 @@ var GUIBuilder = ( function( domain ) {
 		return true;
 
 	} );
-
-	var isTemplateQueueEmpty = function() {
-
-		var q = windgazer.ALCounterHelper.queue,
-			queueEmpty = true;
-		for (n in q) { queueEmpty = queueEmpty && !q.hasOwnProperty(n) };
-		
-		return queueEmpty
-
-	};
 	
 	function pad( i, n ) {
 		return (1<<2).toString(2).substr(1,n-(""+i).length) + i;
 	}
 	
 	var gb = new GUIBuilderClass();
-	
-	gb.on("template.finished", function( ) {
-
-		render();
-
-	});
-	
-	gb.on("counter.modified", function( eventType, data ) {
-
-		var node = document.getElementById( data.id );
-		if (node) {
-
-			node.parentNode.replaceChild( data.counter.renderTemplate(), node );
-
-		};
-
-	});
 	
 	function setupLogTable( table ) {
 
@@ -221,10 +197,10 @@ var GUIBuilder = ( function( domain ) {
 
 	};
 	
-	gb.on("log.modified", function(eventType, data) {
+	gb.on( "log.modified", function( e ) {
 
-		var table = document.querySelector("#log table");
-
+		var table = document.querySelector("#log table"),
+		    data = e.data;
 
 		if ( !table ) {
 			logStash.push(data);
