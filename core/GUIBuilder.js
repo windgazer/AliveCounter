@@ -192,7 +192,7 @@ var GUIBuilder = ( function( domain ) {
 			log = table.appendChild( document.createElement("tbody") );
 
 		}
-		if ( log ) log.appendChild( entry );
+		if ( log ) log.insertBefore( entry, log.firstChild );
 		
 
 	};
