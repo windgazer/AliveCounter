@@ -1,6 +1,6 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
-var GUIBuilder = (function( domain ) {
+var GUIBuilder = ( function( domain ) {
 
 	var defaultId = "content",
 		id = defaultId,
@@ -8,6 +8,84 @@ var GUIBuilder = (function( domain ) {
 		dblclick = false;
 		startHash = document.location.hash,
 		logStash = new Array();
+
+	function GUIBuilderClass() {
+	    //Nothing for now.
+	};
+
+	GUIBuilderClass.prototype = {
+
+        isTemplateQueueEmpty:isTemplateQueueEmpty,
+        render: function() {
+            
+            var promises = new Array();
+
+            if ( isTemplateQueueEmpty() ) {
+
+                this.trigger("gui.render", {  });
+
+                var cnt = document.getElementById( id );
+
+                if ( cnt ) {
+
+                    cnt.innerHTML = "";
+                    
+                    if ( dblclick === false ) {
+                        dblclick = Events.attach( cnt, "dblclick", function(e) {
+                            return Events.cancel(e||Event);
+                        } );
+                        Events.attach( cnt, "selectstart", function(e) {
+                            return Events.cancel(e||Event);
+                        } );
+                    }
+        
+                    for (var i = 0; i < template.length; i++ ) {
+
+                        var ct = template[ i ],
+                            t = windgazer.ALCounterHelper.getType( ct.type ),
+                            promise = new RSVP.Promise(),
+                            c = new t({
+                                title: ct.title,
+                                value: ct.value
+                            });
+
+                        c.renderTemplate().then( function( v ) {
+
+                            cnt.appendChild( v.node );
+                            promise.resolve( { node: v.node } );
+
+                        } );
+                        
+                        promises.push( promise );
+        
+                    }
+                    
+                    cnt.className = cnt.className.replace(/ ?counters_./gi, "");
+                    cnt.className += " counters_" + template.length;
+
+                }
+
+            }
+            
+            return RSVP.all( promises );
+
+        },
+        setRoot: function( guid ) {
+            id = guid;
+        },
+        getRoot: function() {
+            return id;
+        },
+        setTemplate: function( t ) {
+            template = t;
+        },
+        getTemplate: function() {
+            return template;
+        }
+
+	}
+
+	RSVP.EventTarget.mixin( GUIBuilderClass.prototype );
 
 	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
@@ -48,50 +126,15 @@ var GUIBuilder = (function( domain ) {
 		return (1<<2).toString(2).substr(1,n-(""+i).length) + i;
 	}
 	
-	var render = function() {
-
-		if ( isTemplateQueueEmpty() ) {
-
-			ce.fireEvent("gui.render", {  });
-
-			var cnt = document.getElementById(id);
-			cnt.innerHTML = "";
-			
-			if ( dblclick === false ) {
-				dblclick = Events.attach( cnt, "dblclick", function(e) {
-					return Events.cancel(e||Event);
-				} );
-				Events.attach( cnt, "selectstart", function(e) {
-					return Events.cancel(e||Event);
-				} );
-			}
-
-			for (var i = 0; i < template.length; i++ ) {
-
-				var ct = template[ i ];
-				var t = windgazer.ALCounterHelper.getType( ct.type );
-				var c = new t({
-					title: ct.title,
-					value: ct.value
-				});
-				cnt.appendChild(c.renderTemplate());
-
-			}
-			
-			cnt.className = cnt.className.replace(/ ?counters_./gi, "");
-			cnt.className += " counters_" + template.length;
-
-		}
-
-	};
+	var gb = new GUIBuilderClass();
 	
-	ce.attachEvent("template.finished", function(eventType, data) {
+	gb.on("template.finished", function( ) {
 
 		render();
 
 	});
 	
-	ce.attachEvent("counter.modified", function( eventType, data ) {
+	gb.on("counter.modified", function( eventType, data ) {
 
 		var node = document.getElementById( data.id );
 		if (node) {
@@ -178,7 +221,7 @@ var GUIBuilder = (function( domain ) {
 
 	};
 	
-	ce.attachEvent("log.modified", function(eventType, data) {
+	gb.on("log.modified", function(eventType, data) {
 
 		var table = document.querySelector("#log table");
 
@@ -195,25 +238,10 @@ var GUIBuilder = (function( domain ) {
 
 	});
 
-	render();
+	Events.attach( window, "load", function() {
+	    gb.render();
+	});
 
-	return {
-
-		isTemplateQueueEmpty:isTemplateQueueEmpty,
-		render: render,
-		setRoot: function( guid ) {
-			id = guid;
-		},
-		getRoot: function() {
-			return id;
-		},
-		setTemplate: function( t ) {
-			template = t;
-		},
-		getTemplate: function() {
-			return template;
-		}
-
-	};
+	return gb;
 
 })( windgazer );

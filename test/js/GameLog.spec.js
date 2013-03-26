@@ -1,4 +1,4 @@
-describe("GameLog", function() {
+xdescribe("GameLog", function() {
 	
 	var resetEvent = {
 			button: 0,

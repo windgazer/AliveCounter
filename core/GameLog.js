@@ -14,7 +14,7 @@ var GameLog = (function( domain ) {
 					content: arguments
 			};
 			this.logs.push( entry );
-			ce.fireEvent("log.modified", entry);
+			this.trigger("log.modified", entry);
 		},
 		toString: function() {
 			var out = "";
@@ -34,6 +34,8 @@ var GameLog = (function( domain ) {
 		}
 	} );
 	
+	RSVP.EventTarget.mixin( Logger.prototype );
+
 	var logger = new Logger(),
 		timeout = false,
 		tuid = null,
@@ -51,13 +53,13 @@ var GameLog = (function( domain ) {
 
 	}
 
-	ce.attachEvent("gui.render", function( eventType, data ) {
+	GUIBuilder.on("gui.render", function( eventType, data ) {
 
 		logger.log( "New Game" );
 
 	});
 
-	ce.attachEvent("counter.modified", function( eventType, data ) {
+	GUIBuilder.on("counter.modified", function( eventType, data ) {
 
 		if ( timeout ) {
 

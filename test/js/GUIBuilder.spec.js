@@ -41,7 +41,7 @@ describe("GUIBuilder", function() {
 		beforeEach( function() {
 	
 			oid = GUIBuilder.getRoot();
-			windgazer.ALCounterHelper.addTemplate("ALCounter", "<p id='${id}'>${value}</p>");
+			ClassTemplate.addTemplate("ALCounter", "<p id='${id}'>${value}</p>");
 			
 			var node = document.createElement( "div" );
 			node.id = id;
@@ -61,59 +61,128 @@ describe("GUIBuilder", function() {
 		});
 		
 		it("will create counters based on a 'template'", function() {
-			
-			//Call for render
-			GUIBuilder.render();
-			//Check if rendering is unlocked
-			expect(document.getElementById(id).innerHTML.length > 0).toBe(true);
+
+		    var finished = false;
+		    
+		    runs( function() {
+
+		        //Call for render
+	            GUIBuilder.render().then( function () {
+	                finished = true;
+	            });
+
+		    } );
+		    
+		    waitsFor( function() {
+		        return finished;
+		    }, 2000, "Gotta finish rendering...");
+		    
+		    
+		    runs ( function() {
+
+		        //Check if rendering is unlocked
+                expect(document.getElementById(id).innerHTML.length > 0).toBe( true );
+
+		    } );
 	
 		});
 		it("will block until all queued counters are finished", function() {
-	
-			//Add fake template to queue
-			windgazer.ALCounterHelper.queue["dummy"] = true;
-			GUIBuilder.render();
-			//Check if rendering is blocked
-			expect(document.getElementById(id).innerHTML).toBe("");
-			//Remove fake template from queue
-			delete windgazer.ALCounterHelper.queue["dummy"];
-			GUIBuilder.render();
-			//Check if rendering is unlocked
-			var ih = document.getElementById(id).innerHTML;
-			var m = ih.match(re);
-			console.log(ih, m);
-			expect(m).toBeTruthy();
+
+		    //TODO rewrite this test now that queue is gone and working with promises instead...
 	
 		});
 		it("will modify a counter upon clicking", function() {
 	
-			//Call for render
-			GUIBuilder.render();
-			var m = document.getElementById(id).innerHTML.match(re);
-			var cnt = windgazer.ALCounterHelper.getCounter(m[1]);
-			//Cause modify event
-			cnt.modify(1);
-			//Check for render-change
-			var m2 = document.getElementById(id).innerHTML.match(re);
 
-			expect(m2[2]).toBe("1");
+            var finished = false;
+            
+            runs( function() {
+
+                //Call for render
+                GUIBuilder.render().then( function () {
+                    finished = true;
+                });
+
+            } );
+            
+            waitsFor( function() {
+                return finished;
+            }, 2000, "Gotta finish rendering...");
+
+            runs ( function() {
+                finished = false
+    			var m = document.getElementById(id).innerHTML.match(re);
+    			var cnt = windgazer.ALCounterHelper.getCounter(m[1]);
+    			//Cause modify event
+    			cnt.modify(1).then( function(){
+    			    finished = true;
+    			} );
+			} );
+            
+            waitsFor( function() {
+                return finished;
+            }, 2000, "Gotta finish modification...");
+
+            runs ( function() {
+                finished = false
+                //Check for render-change
+                var m2 = document.getElementById(id).innerHTML.match(re);
+                expect(m2[2]).toBe("1");
+            } );
+
 		});
 		it("will reset all counters upon render ", function() {
 	
-			//Call for render
-			GUIBuilder.render();
-			//Cause modify event
-			var m = document.getElementById(id).innerHTML.match(re);
-			var cnt = windgazer.ALCounterHelper.getCounter(m[1]);
-			cnt.modify(1);
-			//Check for render-change
-			var m1 = document.getElementById(id).innerHTML.match(re);
-			expect(m1[2]).toBe("1");
-			//Reset
-			GUIBuilder.render();
-			//Check for render-origin
-			var m2 = document.getElementById(id).innerHTML.match(re);
-			expect(m2[2]).toBe("0");
+
+            var finished = false;
+            
+            runs( function() {
+
+                //Call for render
+                GUIBuilder.render().then( function () {
+                    finished = true;
+                });
+
+            } );
+            
+            waitsFor( function() {
+                return finished;
+            }, 2000, "Gotta finish rendering...");
+
+            runs ( function() {
+                finished = false
+                var m = document.getElementById(id).innerHTML.match(re);
+                var cnt = windgazer.ALCounterHelper.getCounter(m[1]);
+                //Cause modify event
+                cnt.modify(1).then( function(){
+                    finished = true;
+                } );
+            } );
+            
+            waitsFor( function() {
+                return finished;
+            }, 2000, "Gotta finish modification...");
+
+            runs ( function() {
+                finished = false
+                //Check for render-change
+                var m2 = document.getElementById(id).innerHTML.match(re);
+                expect(m2[2]).toBe("1");
+                //Reset
+                GUIBuilder.render().then( function(){
+                    finished = true;
+                } );
+            } );
+            
+            waitsFor( function() {
+                return finished;
+            }, 2000, "Gotta finish modification...");
+
+            runs ( function() {
+    			//Check for render-origin
+    			var m2 = document.getElementById(id).innerHTML.match(re);
+    			expect(m2[2]).toBe("0");
+			} );
 	
 		});
 

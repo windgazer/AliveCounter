@@ -10,92 +10,7 @@ var ALCounter = ( function( domain ) {
 	domain.counters = counters;
 	
 	helper = {
-			
-			queue: {},
-			
-			templates: {},
-			
-			re: /\${([^}]+)}/gi,
 
-			/**
-			 * Attempt to load an html-template into memory based on the
-			 * type of a 'component'. This method expects the file name
-			 * to match the type and the template to reside in the same
-			 * directory as well as having the same filename (with an
-			 * html extension instead of js...)
-			 */
-			loadTemplate : function( type ) {
-
-				var scripts = document.getElementsByTagName("script"),
-					l = scripts.length,
-					i = l,
-					re = new RegExp("^(.*/)" + type + ".js\\b.*$", "i");
-				
-				for (i; i--; ) {
-		
-					var s = scripts[i];
-					var url = s.src;
-					var m = url.match( re );
-					
-					if ( m ) {
-		
-						var templateUrl = m[1] + type + ".html";
-
-						if ( typeof this.templates[ type ] === "undefined"
-							 && typeof this.queue[ templateUrl ] === "undefined" ) {
-
-							var that = this;
-							var request = new HTTPRequest( function( wrapper ) {
-
-								var txt = wrapper.httpRequest.responseText;
-								delete that.queue[ templateUrl ];
-								that.addTemplate( type, txt );
-								ce.fireEvent("template.finished", {type: type, template: txt});
-
-							}, false );
-
-							this.queue[ templateUrl ] = request;
-							ce.fireEvent( "template.queued", {type: type, url: templateUrl} );
-							request.doGet( templateUrl );
-
-						}
-		
-					}
-		
-				}
-
-			},
-			
-			addTemplate : function( type, template ) {
-
-				this.templates[ type ] = template;
-
-			},
-			
-			getTemplate : function( type ) {
-
-				return this.templates[ type ]?this.templates[ type ]:null;
-
-			},
-			
-			fillTemplate : function( template, values ) {
-
-				var o = "",
-				    m = null,
-				    preIndex = 0;
-
-				while (m = this.re.exec(template)) {
-					var v = values[m[1]];
-					v = typeof v!=="undefined"?v:m[1];
-					o += RegExp.leftContext.substr(preIndex) + v;
-					preIndex = this.re.lastIndex;
-				}
-
-				o += RegExp.rightContext;
-
-				return o;
-			},
-			
 			addType: function( type, object ) {
 
 				types[ type ] = object;
@@ -120,7 +35,7 @@ var ALCounter = ( function( domain ) {
 				counter.modify( inc );
 				return false;
 			}
-			
+
 	};
 
 	domain.ALCounterHelper = helper;
@@ -129,7 +44,7 @@ var ALCounter = ( function( domain ) {
 		return type + uidI++;
 	};
 	
-	helper.loadTemplate(type);
+	ClassTemplate.loadTemplate( type );
 	
 	FastButtonListener.addHandler( "countUp", function( a ) {
 		return helper.modifyCounterByLink( a, 1 );
@@ -161,12 +76,11 @@ var ALCounter = ( function( domain ) {
 		},
 		modify: function( inc ) {
 			this.value = this.value + inc;
-			ce.fireEvent("counter.modified", { id: this.id, counter: this, inc: inc });
+			this.trigger( "counter.modified", { id: this.id, counter: this, inc: inc } );
+			return this.renderTemplate( this.node );
 		},
 		renderTemplate: function( node ) {
-			var doc = document.createDocumentFragment(),
-				div = document.createElement("div"),
-				template = helper.getTemplate( this.getType() ),
+			var div = document.createElement("div"),
 				that = this,
 				values = {
 					title	: that.getTitle(),
@@ -174,14 +88,20 @@ var ALCounter = ( function( domain ) {
 					value	: that.getValue(),
 					type	: that.getType()
 				};
-			
-			div.innerHTML = helper.fillTemplate( template, values );
-			while ( div.firstChild ) doc.appendChild( div.firstChild );
-			if ( node ) node.parentNode.replaceChild( node, doc );
-			return doc;
+
+			return ClassTemplate.renderTemplate( type, values, div ).then( function( v ) {
+			    that.node = v.node.firstChild;
+			    if ( node && node.parentNode ) {
+			        var p = node.parentNode;
+			        node.parentNode.replaceChild( that.node, node );
+			    }
+			    return { node: that.node };
+			} );
 		}
 	});
 	
+	RSVP.EventTarget.mixin( alcounterClass.prototype );
+
 	helper.addType( type, alcounterClass );
 
 	return alcounterClass;

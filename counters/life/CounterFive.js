@@ -4,7 +4,7 @@ var CounterFive = ( function( domain ) {
 
 	var type = "CounterFive";
 	
-	domain.ALCounterHelper.loadTemplate(type);
+	ClassTemplate.loadTemplate(type);
 	
 	FastButtonListener.addHandler( "countFiveUp", function( a ) {
 		return domain.ALCounterHelper.modifyCounterByLink( a, 5 );

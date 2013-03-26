@@ -12,6 +12,8 @@
         "libs/a5s/rsvp/browser/rsvp.js",
         "libs/*/*.js",
         "libs/*.js",
+        "core/ALCounter.js",
+        "core/GUIBuilder.js",
         "core/**/*.js",
         "counters/**/*.js",
         "test/js/**/*.js"
