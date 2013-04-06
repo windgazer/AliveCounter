@@ -17,6 +17,7 @@ var GUIBuilder = ( function( domain ) {
 
 	function GUIBuilderClass() {
 	    //Nothing for now.
+	    this.counters = new Array();
 	};
 
 	GUIBuilderClass.prototype = {
@@ -24,8 +25,9 @@ var GUIBuilder = ( function( domain ) {
         render: function() {
             
             var promises = new Array();
+            this.counters = new Array();
 
-            this.trigger("gui.render", {  });
+            this.trigger( "gui.render", { src: this } );
 
             var cnt = document.getElementById( id );
 
@@ -60,7 +62,8 @@ var GUIBuilder = ( function( domain ) {
                         promise.resolve( { node: v.node } );
 
                     } );
-                    
+
+                    this.counters.push( c );
                     promises.push( promise );
     
                 }
@@ -84,6 +87,9 @@ var GUIBuilder = ( function( domain ) {
         },
         getTemplate: function() {
             return template;
+        },
+        getCounters: function() {
+            return this.counters;
         }
 
 	}

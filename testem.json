@@ -14,7 +14,7 @@
         "libs/*.js",
         "core/ALCounter.js",
         "core/GUIBuilder.js",
-        "core/**/*.js",
+        "core/GameLog.js",
         "counters/**/*.js",
         "test/js/**/*.js"
     ],

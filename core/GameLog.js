@@ -46,7 +46,7 @@ var GameLog = (function( domain ) {
 		var cntr = domain.counters[tuid];
 		try {
 			logger.log( ttotal, cntr.getValue(), cntr.getTitle() );
-		} catch ( whatever ) {}
+		} catch ( whatever ) { if ( console ) console.error( whatever ); }
 		tuid = null;
 		ttotal = 0;
 		timeout = false;

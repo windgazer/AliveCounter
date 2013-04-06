@@ -12,7 +12,8 @@ describe("GameLog", function() {
 	}
 	
 	beforeEach( function() {
-		var id = GUIBuilder.getRoot(),
+
+	    var id = GUIBuilder.getRoot(),
 			n = document.getElementById(id);
 		
 		if (n) {
@@ -22,6 +23,20 @@ describe("GameLog", function() {
 		var n = document.createElement("div");
 		n.id = id;
 		document.body.appendChild(n);
+		GUIBuilder.setTemplate( 
+		        [
+                     {
+                         title: "My Life",
+                         type:"CounterFive",
+                         value:20
+                     },
+                     {
+                         title: "Player 1",
+                         type:"CounterFive",
+                         value:20
+                     }
+                ]
+		);
 		//GameLog.clearLog();
 
 	});
@@ -44,20 +59,16 @@ describe("GameLog", function() {
 	    var finished = false,
 	        log1 = GameLog.getLog();
 
-	    console.log("Marco");
-
 	    runs( function() {
-	        GUIBuilder.on( "log.modified", function() {
-	            console.log("Polo");
+	        GUIBuilder.on( "render", function() {
 	            finished = true;
 	        });
-	        console.log( "Resetting" );
 	        GUIBuilder.render();
 	    } );
         
         waitsFor( function() {
-            return finished;
-        }, 2000, "Gotta finish rendering...");
+            return GameLog.getLog() !== log1;
+        }, 2000, "game reset...");
 
         runs( function() {
     		var log2 = GameLog.getLog();
@@ -67,25 +78,32 @@ describe("GameLog", function() {
 	});
 	
 	it("Logs a counter modification", function() {
-		
-		var log1 = GameLog.getLog();
-		var counters = window.windgazer.counters;
+
+	    jasmine.Clock.useMock();		
+
+	    var counters = window.windgazer.counters,
+		    guids = new Array(),
+		    logBefore = GameLog.getLog();
 
 		for ( var cntr in counters ){
-			if ( counters.hasOwnProperty( cntr ) ) {
-				cntr = counters[cntr];
-				cntr.modify( 1 );
-			}
-		}
-		var log2 = GameLog.getLog();
+            if ( counters.hasOwnProperty( cntr ) ) {
+                guids.push(cntr);
+            }
+        }
 
-		expect(log1).not.toBe(log2);
+		GUIBuilder.render();
+	    GUIBuilder.getCounters()[0].modify( 1 );
+
+	    jasmine.Clock.tick(5000);
+
+        expect( logBefore ).not.toBe( GameLog.getLog() );
 
 	});
 	
 	it("Can forcibly clear the log", function() {
 
 		GameLog.clearLog();
+
 		var log1 = GameLog.getLog();
 		
 		var count = log1.split("\n").length;
@@ -96,51 +114,26 @@ describe("GameLog", function() {
 	
 	it("Groups multiple modifications on a single counter", function() {
 
-		var uid = null,
-			counters = window.windgazer.counters,
-			orgLength = 0,
-			guids = new Array();
-
-		runs( function() {
-			
-			GameLog.clearLog();
-	
-			for ( var cntr in counters ){
-				if ( counters.hasOwnProperty( cntr ) ) {
-					guids.push(cntr);
-				}
-			}
-			
-			var uid = guids[0];
-			
-			var cntr1 = counters[uid],
-				cntr2 = counters[guids[1]];
-			
-			orgLength = GameLog.getLog().split("\n").length;
-	
-			cntr1.modify(5);
-			cntr1.modify(2);
-			cntr1.modify(-3);
-
-		});
+        jasmine.Clock.useMock();        
+		GameLog.clearLog();
 		
-		waitsFor( function() {
+		orgLength = GameLog.getLog().split("\n").length;
 
-			var nl = GameLog.getLog().split("\n").length;
-			return nl > orgLength;
+		var cntr1 = GUIBuilder.getCounters()[0];
+		cntr1.modify(  5 );
+		cntr1.modify(  2 );
+		cntr1.modify( -3 );
 
-		}, "The counter should have been incremented", 7500);
+        var log1 = GameLog.getLog(),
+            count = log1.split("\n").length;
+		expect(count).toBe(orgLength);
 
-		runs( function() {
+		//Fast-forward time ;)
+		jasmine.Clock.tick(5000);
 
-			var log1 = GameLog.getLog();
-			
-			var count = log1.split("\n").length;
-			//var newValue = cntr1.getValue();
-			
-			expect(count).toBe(3);
-
-		});
+        log1 = GameLog.getLog();
+        count = log1.split("\n").length;
+		expect(count).toBe(orgLength + 1);
 		
 	});
 
