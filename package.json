@@ -2,7 +2,7 @@
 
     "name":"AliveCounter",
     "author": "Martin 'Windgazer' Reurings <martin@windgazer.nl>",
-    "version":"0.1.4",
+    "version":"0.1.5",
 
     "dependencies":{
     },
