@@ -13,15 +13,15 @@ var CounterFive = ( function( domain ) {
 		return domain.ALCounterHelper.modifyCounterByLink( a, -5 );
 	});
 
-	var counterFiveClass = ALCounter.extend({
+	var CounterFiveClass = ALCounter.extend({
 		init: function( params ) {
 			this._super( params );
 			this.type = type; //Type is different...
 		}
 	});
 	
-	domain.ALCounterHelper.addType( type, counterFiveClass );
+	domain.ALCounterHelper.addType( type, CounterFiveClass );
 
-	return counterFiveClass;
+	return CounterFiveClass;
 
 })( windgazer );

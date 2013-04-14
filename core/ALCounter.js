@@ -89,7 +89,7 @@ var ALCounter = ( function( domain ) {
 					type	: that.getType()
 				};
 
-			return ClassTemplate.renderTemplate( type, values, div ).then( function( v ) {
+			return ClassTemplate.renderTemplate( that.type, values, div ).then( function( v ) {
 			    that.node = v.node.firstChild;
 			    if ( node && node.parentNode ) {
 			        var p = node.parentNode;
