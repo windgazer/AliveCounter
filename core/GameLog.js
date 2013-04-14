@@ -1,7 +1,7 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
 var GameLog = (function( domain ) {
-	
+
 	var Logger = Class.extend( {
 		init: function() {
 			this.logs = new Array();
@@ -14,7 +14,7 @@ var GameLog = (function( domain ) {
 					content: arguments
 			};
 			this.logs.push( entry );
-			ce.fireEvent("log.modified", entry);
+			this.trigger( "log.modified", { data:entry } );
 		},
 		toString: function() {
 			var out = "";
@@ -34,6 +34,8 @@ var GameLog = (function( domain ) {
 		}
 	} );
 	
+	RSVP.EventTarget.mixin( Logger.prototype );
+
 	var logger = new Logger(),
 		timeout = false,
 		tuid = null,
@@ -44,29 +46,29 @@ var GameLog = (function( domain ) {
 		var cntr = domain.counters[tuid];
 		try {
 			logger.log( ttotal, cntr.getValue(), cntr.getTitle() );
-		} catch ( whatever ) {}
+		} catch ( whatever ) { if ( console ) console.error( whatever ); }
 		tuid = null;
 		ttotal = 0;
 		timeout = false;
 
 	}
 
-	ce.attachEvent("gui.render", function( eventType, data ) {
+	GUIBuilder.on("gui.render", function( eventType, data ) {
 
 		logger.log( "New Game" );
 
 	});
 
-	ce.attachEvent("counter.modified", function( eventType, data ) {
+	GUIBuilder.on("counter.modified", function( e ) {
 
 		if ( timeout ) {
 
 			//Clear current timeout
 			window.clearTimeout( timeout );
 
-			if ( tuid == data.id ) {
+			if ( tuid == e.id ) {
 
-				ttotal += data.inc;
+				ttotal += e.inc;
 
 			} else {
 
@@ -77,23 +79,38 @@ var GameLog = (function( domain ) {
 		}
 		if ( tuid=== null ) {
 
-			tuid = data.id;
-			ttotal = data.inc;
+			tuid = e.id;
+			ttotal = e.inc;
 
 		}
-		//logger.log( data );
 		
 		timeout = window.setTimeout( resolveTimer, 3000 );
 
 	});
 	
-	return {
-		getLog: function() {
-			return logger.toString();
-		},
-		clearLog: function() {
-			logger = new Logger();
-		}
-	};
+	function bubbleEvent( source, target, event ) {
+	    source.on( event, function( e ) {
+	        target.trigger( event, e );
+	        GUIBuilder.trigger( event, e );
+        } );
+	}
+    
+    function GameLog() {
+        bubbleEvent( logger, this, "log.modified" );
+    };
+    
+    GameLog.prototype = {
+        getLog: function() {
+            return logger.toString();
+        },
+        clearLog: function() {
+            logger = new Logger();
+            bubbleEvent( logger, this, "log.modified" );
+        }
+    };
+
+    RSVP.EventTarget.mixin( GameLog.prototype );
+	
+	return new GameLog();
 
 })( windgazer );
