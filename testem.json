@@ -1,7 +1,7 @@
 {
     "launchers": {
         "CSSLint": {
-            "command": "csslint style"
+            "command": "csslint css"
         }
     },
     "launch_in_dev": [
@@ -9,15 +9,18 @@
         "CSSLint"
     ],
     "src_files": [
-        "libs/**/*.js",
-        "core/**/*.js",
+        "libs/a5s/rsvp/browser/rsvp.js",
+        "libs/*/*.js",
+        "libs/*.js",
+        "core/ALCounter.js",
+        "core/GUIBuilder.js",
+        "core/GameLog.js",
         "counters/**/*.js",
         "test/js/**/*.js"
     ],
     "watch_files": [
         "**/*.css",
-        "core/**/*.js",
-        "counters/**/*.js",
+        "lib/**/*.js",
         "test/js/**/*.js"
     ]
 }

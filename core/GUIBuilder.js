@@ -1,6 +1,6 @@
 window.windgazer = typeof window.windgazer == "undefined"? {}: window.windgazer;
 
-var GUIBuilder = (function( domain ) {
+var GUIBuilder = ( function( domain ) {
 
 	var defaultId = "content",
 		id = defaultId,
@@ -8,11 +8,98 @@ var GUIBuilder = (function( domain ) {
 		dblclick = false;
 		startHash = document.location.hash,
 		logStash = new Array();
+	    
+    function bubbleEvent( source, target, event ) {
+        source.on( event, function( e ) {
+            target.trigger( event, e );
+        } );
+    }
+
+	function GUIBuilderClass() {
+	    //Nothing for now.
+	    this.counters = new Array();
+	};
+
+	GUIBuilderClass.prototype = {
+
+        render: function() {
+            
+            var promises = new Array();
+            this.counters = new Array();
+
+            this.trigger( "gui.render", { src: this } );
+
+            var cnt = document.getElementById( id );
+
+            if ( cnt ) {
+
+                cnt.innerHTML = "";
+                
+                if ( dblclick === false ) {
+                    dblclick = Events.attach( cnt, "dblclick", function(e) {
+                        return Events.cancel(e||Event);
+                    } );
+                    Events.attach( cnt, "selectstart", function(e) {
+                        return Events.cancel(e||Event);
+                    } );
+                }
+    
+                for (var i = 0; i < template.length; i++ ) {
+
+                    var ct = template[ i ],
+                        t = windgazer.ALCounterHelper.getType( ct.type ),
+                        promise = new RSVP.Promise(),
+                        c = new t({
+                            title: ct.title,
+                            value: ct.value
+                        });
+                    
+                    bubbleEvent( c, this, "counter.modified" )
+
+                    c.renderTemplate().then( function( v ) {
+
+                        cnt.appendChild( v.node );
+                        promise.resolve( { node: v.node } );
+
+                    } );
+
+                    this.counters.push( c );
+                    promises.push( promise );
+    
+                }
+                
+                cnt.className = cnt.className.replace(/ ?counters_./gi, "");
+                cnt.className += " counters_" + template.length;
+
+            }
+
+            return RSVP.all( promises );
+
+        },
+        setRoot: function( guid ) {
+            id = guid;
+        },
+        getRoot: function() {
+            return id;
+        },
+        setTemplate: function( t ) {
+            template = t;
+        },
+        getTemplate: function() {
+            return template;
+        },
+        getCounters: function() {
+            return this.counters;
+        }
+
+	}
+
+	RSVP.EventTarget.mixin( GUIBuilderClass.prototype );
 
 	//+++OPTIONS
 	LinkListener.addHandler( "reset", function( a ) {
 
-		render();
+		gb.render();
 		return true;
 
 	});
@@ -33,74 +120,12 @@ var GUIBuilder = (function( domain ) {
 		return true;
 
 	} );
-
-	var isTemplateQueueEmpty = function() {
-
-		var q = windgazer.ALCounterHelper.queue,
-			queueEmpty = true;
-		for (n in q) { queueEmpty = queueEmpty && !q.hasOwnProperty(n) };
-		
-		return queueEmpty
-
-	};
 	
 	function pad( i, n ) {
 		return (1<<2).toString(2).substr(1,n-(""+i).length) + i;
 	}
 	
-	var render = function() {
-
-		if ( isTemplateQueueEmpty() ) {
-
-			ce.fireEvent("gui.render", {  });
-
-			var cnt = document.getElementById(id);
-			cnt.innerHTML = "";
-			
-			if ( dblclick === false ) {
-				dblclick = Events.attach( cnt, "dblclick", function(e) {
-					return Events.cancel(e||Event);
-				} );
-				Events.attach( cnt, "selectstart", function(e) {
-					return Events.cancel(e||Event);
-				} );
-			}
-
-			for (var i = 0; i < template.length; i++ ) {
-
-				var ct = template[ i ];
-				var t = windgazer.ALCounterHelper.getType( ct.type );
-				var c = new t({
-					title: ct.title,
-					value: ct.value
-				});
-				cnt.appendChild(c.renderTemplate());
-
-			}
-			
-			cnt.className = cnt.className.replace(/ ?counters_./gi, "");
-			cnt.className += " counters_" + template.length;
-
-		}
-
-	};
-	
-	ce.attachEvent("template.finished", function(eventType, data) {
-
-		render();
-
-	});
-	
-	ce.attachEvent("counter.modified", function( eventType, data ) {
-
-		var node = document.getElementById( data.id );
-		if (node) {
-
-			node.parentNode.replaceChild( data.counter.renderTemplate(), node );
-
-		};
-
-	});
+	var gb = new GUIBuilderClass();
 	
 	function setupLogTable( table ) {
 
@@ -173,15 +198,15 @@ var GUIBuilder = (function( domain ) {
 			log = table.appendChild( document.createElement("tbody") );
 
 		}
-		if ( log ) log.appendChild( entry );
+		if ( log ) log.insertBefore( entry, log.firstChild );
 		
 
 	};
 	
-	ce.attachEvent("log.modified", function(eventType, data) {
+	gb.on( "log.modified", function( e ) {
 
-		var table = document.querySelector("#log table");
-
+		var table = document.querySelector("#log table"),
+		    data = e.data;
 
 		if ( !table ) {
 			logStash.push(data);
@@ -195,25 +220,10 @@ var GUIBuilder = (function( domain ) {
 
 	});
 
-	render();
+	Events.attach( window, "load", function() {
+	    gb.render();
+	});
 
-	return {
-
-		isTemplateQueueEmpty:isTemplateQueueEmpty,
-		render: render,
-		setRoot: function( guid ) {
-			id = guid;
-		},
-		getRoot: function() {
-			return id;
-		},
-		setTemplate: function( t ) {
-			template = t;
-		},
-		getTemplate: function() {
-			return template;
-		}
-
-	};
+	return gb;
 
 })( windgazer );
