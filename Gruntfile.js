@@ -10,12 +10,17 @@ module.exports = function(grunt) {
         dirs: ['temp', 'dist']
       }
     },
+    bower: {
+      install: {
+         //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+      }
+    },
   });
 
-  // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-usemin');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task(s).
-  grunt.registerTask('default', ['usemin']);
+  //grunt.registerTask('install', ['bower:install']);
 
 };
