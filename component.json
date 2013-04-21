@@ -1,9 +1,5 @@
 {
-  "name": "AliveCounter",
-  "author": "Martin 'Windgazer' Reurings <martin@windgazer.nl>",
-  "version": "0.1.5-npm",
   "dependencies": {
     "a5s": "git://github.com/windgazer/app5upport.git#v0.0.5-npm"
-  },
-  "devDependencies": {}
+  }
 }
