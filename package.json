@@ -1,22 +1,21 @@
 {
-
-    "name":"AliveCounter",
-    "author": "Martin 'Windgazer' Reurings <martin@windgazer.nl>",
-    "version":"0.1.5.1",
-
-    "dependencies":{
-    },
-
-    "devDependencies":{
-        "jasmine-node":"",
-        "testem":"",
-        "csslint":""
-    },
-
-    "engine": "node 0.8.12",
-
-    "scripts":{
-        "test":"testem ci"
-    }
-
+  "name": "AliveCounter",
+  "author": "Martin 'Windgazer' Reurings <martin@windgazer.nl>",
+  "version": "0.1.5-npm",
+  "dependencies": {
+    "a5s": "git://github.com/windgazer/app5upport.git#v0.0.5-minified"
+  },
+  "devDependencies": {
+    "a5s": "git://github.com/windgazer/app5upport.git#v0.0.4-src",
+    "jasmine-node": "",
+    "testem": "",
+    "csslint": "",
+    "grunt": "~0.4.1",
+    "grunt-htmlbuild": "~0.1.2",
+    "grunt-usemin": "~0.1.11"
+  },
+  "engine": "node 0.8.12",
+  "scripts": {
+    "test": "testem ci"
+  }
 }
