@@ -8,9 +8,7 @@
     "jasmine-node": "",
     "testem": "",
     "csslint": "",
-    "grunt": "~0.4.1",
-    "grunt-usemin": "~0.1.11",
-    "grunt-bower-task": "~0.2.0"
+    "bower": ""
   },
   "engine": "node 0.8.12",
   "scripts": {
