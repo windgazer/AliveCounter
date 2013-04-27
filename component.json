@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "release": "git://github.com/windgazer/AliveCounter.git"
+  }
+}
