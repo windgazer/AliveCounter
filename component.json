@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "a5s": "git://github.com/windgazer/app5upport.git#v0.0.5-npm"
+  }
+}
