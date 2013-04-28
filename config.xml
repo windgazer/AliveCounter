@@ -6,7 +6,7 @@
 	width		="320"
 	viewmodes	="floating fullscreen maximized windowed"
 	id			= "nl.windgazer.alivecounter"
-	versionCode	="4"
+	versionCode	="5"
 	version		= "0.1.6">
 	<name short="AliveCounter">Alive Counter</name>
 	<description>
