@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "release": "git://github.com/windgazer/AliveCounter.git"
+    "release": "https://github.com/windgazer/AliveCounter/archive/improvement-NPM_dependencies.zip"
   }
 }
