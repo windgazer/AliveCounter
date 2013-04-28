@@ -11,7 +11,8 @@
     "src_files": [
         "libs/a5s/rsvp.min.js",
         "libs/a5s/*.js",
-        "libs/*.js",
+        "core/sji.js",
+        "core/linklistener.js",
         "core/ALCounter.js",
         "core/GUIBuilder.js",
         "core/GameLog.js",
