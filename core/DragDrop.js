@@ -4,6 +4,7 @@ var DragDrop = (function(body){
         DragDropTouchDown,
         DragDropMouseUp,
         DragDropTouchUp,
+        DragDropMove,
         handlers = {},
         source = null,
         handle = null,
@@ -22,7 +23,7 @@ var DragDrop = (function(body){
         
         handler = handlers[dragHandle]
 
-        console.log(dragSource, dragHandle, handler);
+//        console.log(dragSource, dragHandle, handler);
         if(dragSource && dragHandle && handler) {
             handle = dragHandle;
             source = dragSource;
@@ -36,6 +37,8 @@ var DragDrop = (function(body){
             //Create mouse/touch up handler to fullfill promise
             DragDropMouseUp = events.attach( body, "mouseup", dragStop );
             DragDropTouchUp = events.attach( body, "touchend", dragStop );
+            DragDropMove = events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
+
         }
         
     }
@@ -43,6 +46,7 @@ var DragDrop = (function(body){
     function dragStop(e) {
         DragDropMouseUp = events.detach(DragDropMouseUp);
         DragDropTouchUp = events.detach(DragDropTouchUp);
+        DragDropMove = events.detach(DragDropMove);
 
         var e = e||event,
             target = e.target||e.srcElement,
@@ -63,6 +67,7 @@ var DragDrop = (function(body){
             dragTarget = dragTarget.parentNode;
         }
         
+//        console.log(dragTarget, dragHandle, promise);
         if(dragTarget && dragHandle && dragHandle === handle) {
             promise.resolve(dragTarget);
         } else {
