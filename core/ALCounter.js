@@ -10,8 +10,8 @@ var ALCounter = ( function( domain ) {
 	domain.counters = counters;
 	
 	DragDrop.addHandler('life', function(src,trgt) {
-	    console.log('%cFiring handler!!','color:blue;',src, trgt);
-	    if (src !== trgt) {
+//	    console.log('%cFiring handler!!','color:blue;',src, trgt);
+	    if (src.id !== trgt.id) {
             helper.getCounter(src.id).modify(-1);
             helper.getCounter(trgt.id).modify(+1);
 	    }
