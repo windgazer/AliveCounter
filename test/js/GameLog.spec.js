@@ -111,30 +111,56 @@ describe("GameLog", function() {
 		expect(count).toBe(2);
 
 	});
-	
-	it("Groups multiple modifications on a single counter", function() {
+    
+    it("Groups multiple modifications on a single counter", function() {
 
         jasmine.Clock.useMock();        
-		GameLog.clearLog();
-		
-		orgLength = GameLog.getLog().split("\n").length;
+        GameLog.clearLog();
+        
+        orgLength = GameLog.getLog().split("\n").length;
 
-		var cntr1 = GUIBuilder.getCounters()[0];
-		cntr1.modify(  5 );
-		cntr1.modify(  2 );
-		cntr1.modify( -3 );
+        var cntr1 = GUIBuilder.getCounters()[0];
+        cntr1.modify(  5 );
+        cntr1.modify(  2 );
+        cntr1.modify( -3 );
 
         var log1 = GameLog.getLog(),
             count = log1.split("\n").length;
-		expect(count).toBe(orgLength);
+        expect(count).toBe(orgLength);
 
-		//Fast-forward time ;)
-		jasmine.Clock.tick(5000);
+        //Fast-forward time ;)
+        jasmine.Clock.tick(5000);
 
         log1 = GameLog.getLog();
         count = log1.split("\n").length;
-		expect(count).toBe(orgLength + 1);
-		
-	});
+        expect(count).toBe(orgLength + 1);
+        
+    });
+    
+    it("Groups multiple modifications on multiple counters", function() {
+
+        jasmine.Clock.useMock();        
+        GameLog.clearLog();
+        
+        orgLength = GameLog.getLog().split("\n").length;
+
+        var cntr1 = GUIBuilder.getCounters()[0],
+            cntr2 = GUIBuilder.getCounters()[1];
+        cntr1.modify(  5 );
+        cntr1.modify(  2 );
+        cntr2.modify( -3 );
+
+        var log1 = GameLog.getLog(),
+            count = log1.split("\n").length;
+        expect(count).toBe(orgLength);
+
+        //Fast-forward time ;)
+        jasmine.Clock.tick(5000);
+
+        log1 = GameLog.getLog();
+        count = log1.split("\n").length;
+        expect(count).toBe(orgLength + 1);
+        
+    });
 
 });

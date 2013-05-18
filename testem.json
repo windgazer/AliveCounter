@@ -6,12 +6,14 @@
     },
     "launch_in_dev": [
         "PhantomJS",
+        "Chrome",
         "CSSLint"
     ],
     "src_files": [
-        "libs/a5s/rsvp.min.js",
+        "libs/a5s/rsvp.js",
         "libs/a5s/*.js",
         "core/sji.js",
+        "core/DragDrop.js",
         "core/linklistener.js",
         "core/ALCounter.js",
         "core/GUIBuilder.js",
