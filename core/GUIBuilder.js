@@ -144,11 +144,23 @@ var GUIBuilder = ( function( domain ) {
 
 	};
 	
+	function parseData( data ) {
+	    var out = [],
+	        blob;
+
+	    if (data.length < 3) { out = data };
+	    while ( data.length >= 3 ) {
+	        blob = data.splice(0, 3);
+	        out[blob[2]] = blob;
+	    }
+	    return out;
+	}
+	
 	function createEntry( data ) {
 
 		var timeString = pad( data.time.getHours(), 2 ) + ":" + pad( data.time.getMinutes(), 2 ) + ":" + pad( data.time.getSeconds(), 2 ),
 	    	dataEntry = data.content,
-	    	dataEntered = false;
+	    	dataEntered = parseData( dataEntry );
 
 		//Create a new table-row with log-entry data
 		var entry = document.createElement("tr");
@@ -161,10 +173,9 @@ var GUIBuilder = ( function( domain ) {
 				inc = false,
 				total = false;
 			
-			if ( ct.title == dataEntry[2] ) {
-				inc = dataEntry[0];
-				total = dataEntry[1];
-				dataEntered = true;
+			if ( dataEntered[ct.title] ) {
+				inc = dataEntered[ct.title][0];
+				total = dataEntered[ct.title][1];
 			}
 			entry.appendChild( document.createElement( "td" ) ).
 				appendChild( document.createTextNode( inc===false?"":inc ) );
@@ -172,7 +183,7 @@ var GUIBuilder = ( function( domain ) {
 				appendChild( document.createTextNode( total===false?"":total ) );
 		}
 
-		if ( !dataEntered ) {
+		if ( dataEntered.length > 0 ) {
 			var cell = entry.appendChild( document.createElement( "td" ) );
 			cell.className = "free";
 			cell.appendChild( document.createTextNode( dataEntry[0] ) );
