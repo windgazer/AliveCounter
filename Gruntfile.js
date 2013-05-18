@@ -11,7 +11,8 @@ module.exports = function(grunt) {
         }
     },
     clean: {
-        afterRelease: ['Release/libs']
+        afterRelease: ['Release/libs'],
+        all: ['/libs','/node_modules']
     },
     useminPrepare: {
         html: ['Release/index.html']
@@ -29,6 +30,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task(s).
-  grunt.registerTask('default', ['copy:release', 'useminPrepare', 'concat', 'uglify', 'usemin','clean:afterRelease']);
+  grunt.registerTask('release', ['copy:release', 'useminPrepare', 'concat', 'uglify', 'usemin','clean:afterRelease']);
 
 };

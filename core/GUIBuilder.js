@@ -97,7 +97,7 @@ var GUIBuilder = ( function( domain ) {
 	RSVP.EventTarget.mixin( GUIBuilderClass.prototype );
 
 	//+++OPTIONS
-	LinkListener.addHandler( "reset", function( a ) {
+	FastButtonListener.addHandler( "reset", function( a ) {
 
 		gb.render();
 		return true;
@@ -106,7 +106,7 @@ var GUIBuilder = ( function( domain ) {
 	//OPTIONS---
 
 	//Prevent endless 'back'-button behavior (keeping history clean...)
-	LinkListener.addHandler( "dialogEnd", function( a ) {
+	FastButtonListener.addHandler( "dialogEnd", function( a ) {
 
 		//Making sure we're not still on the first page dialog that we opened with...
 		if ( document.location.hash !== startHash ) {
