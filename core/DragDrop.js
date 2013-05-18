@@ -37,6 +37,7 @@ var DragDrop = (function(body){
             //Create mouse/touch up handler to fullfill promise
             DragDropMouseUp = events.attach( body, "mouseup", dragStop );
             DragDropTouchUp = events.attach( body, "touchend", dragStop );
+            //For Android, must kill touchMove or no touchEnd is fired?!?
             DragDropMove = events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
 
         }
