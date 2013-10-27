@@ -28,3 +28,21 @@ to block margin-collapse can safely `@extend` this fragment.
 	padding-bottom: 1px;
 	padding-top: 1px;
 }
+
+/*
+# clearFloat
+
+This extension is for clearing floats in a container. Any container that
+needs to clear floats contained within it may `@extend` this fragment.
+It will generate an :after pseudo-element which will clear any floats.
+*/
+%clearFloat {
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		width: 0;
+		height: 0;
+		visibility: hidden;
+	}
+}
