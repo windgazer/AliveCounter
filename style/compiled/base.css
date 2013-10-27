@@ -1,0 +1,432 @@
+@CHARSET "UTF-8";
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/extends\/_utils\.scss}line{font-family:\000031}}
+body, html, ul, menu, h1, h2, h3, h4, p {
+  color: inherit;
+  font-size: 1em;
+  font-weight: inherit;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  text-decoration: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\000035}}
+* {
+  font-size: 100%;
+  font-family: inherit;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000314}}
+h1, h2, h3, h4, p {
+  margin: 0;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000321}}
+h1, h2, h3, h4 {
+  font-family: georgia, serif;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000325}}
+a {
+  color: white;
+  text-decoration: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000330}}
+body {
+  color: black;
+  background-color: #202020;
+  -webkit-transition: font 2s ease-in-out;
+  -moz-transition: font 2s ease-in-out;
+  -o-transition: font 2s ease-in-out;
+  transition: font 2s ease-in-out;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000344}}
+header,
+menu,
+.counter,
+footer,
+.dialogEnd,
+.log {
+  background: rgba(240, 240, 128, 0.65);
+  border-color: rgba(240, 240, 128, 0.75);
+  border-style: solid;
+  border-width: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000351}}
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.25em;
+  border-width: 0 0 0.2em;
+  font-size: 175%;
+  z-index: 10;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000362}}
+header > h1 {
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000366}}
+header > [rel="dialogStart"]:before {
+  content: ".";
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  padding: 0.25em 0 0 0.25em;
+  background: white;
+  box-shadow: 0 0.35em 0 rgba(255, 255, 255, 0.6), 0 0.7em 0 rgba(255, 255, 255, 0.3);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000380}}
+header > [rel="dialogStart"] {
+  float: right;
+  overflow: hidden;
+  text-indent: -10em;
+  width: 1em;
+  height: 1em;
+  position: relative;
+  /*Bigger touch-area for small devices*/
+  padding: 0 0 0.5em 0.5em;
+  margin: 0 0 -0.5em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000392}}
+.orientation_landscape > header > [rel="dialogStart"] {
+  /*Bigger touch-area for small devices*/
+  padding: 0 0 1em 1em;
+  margin: 0 0 -1em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\0000398}}
+menu {
+  background: rgba(0, 0, 0, 0.85);
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  bottom: 1em;
+  left: 1em;
+  overflow: auto;
+  padding: 0.25em;
+  border-width: 0.2em;
+  border-radius: 0.5em;
+  display: none;
+  z-index: 1;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003113}}
+menu:target {
+  display: block;
+  z-index: 15;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003118}}
+.dialogEnd {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  background: rgba(127, 127, 255, 0.5);
+  border-radius: 0.25em;
+  border-width: 0.2em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003126}}
+.dialogEnd > a {
+  display: block;
+  padding: 0.25em 0.75em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003131}}
+menu > li {
+  margin: 0.25em;
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003136}}
+menu > li > a {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003141}}
+.counter {
+  font-size: 175%;
+  border-width: 0.2em;
+  border-radius: 0.5em;
+  padding: 0.25em;
+  float: left;
+  margin: 1.15em 0em 0 0.75em;
+  position: relative;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003151}}
+.counter > p {
+  font-size: 175%;
+  text-align: center;
+  margin: 0 0 0.25em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003157}}
+[rel*="count"] {
+  position: absolute;
+  color: rgba(64, 64, 64, 0.5);
+  text-align: center;
+  left: 0;
+  width: 100%;
+  padding: 0.5em 0;
+  text-decoration: none;
+  -webkit-transition: color 500ms ease-in-out;
+  -moz-transition: color 500ms ease-in-out;
+  -o-transition: color 500ms ease-in-out;
+  transition: color 500ms ease-in-out;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003172}}
+[rel*="count"]:hover {
+  color: rgba(128, 128, 128, 0.75);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003175}}
+[rel="countUp"] {
+  top: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003178}}
+[rel="countDown"] {
+  bottom: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003182}}
+.content {
+  margin: 1.35em 0 2em;
+  position: relative;
+  z-index: 5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003188}}
+.log {
+  position: fixed;
+  height: 1.5em;
+  bottom: 0;
+  border-width: 0.2em 0.2em 0;
+  border-radius: 0.5em 0.5em 0 0;
+  padding: 0 0.5em;
+  margin: 0 0 0 1em;
+  color: white;
+  z-index: 25;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003200}}
+.log > table {
+  display: none;
+  position: absolute;
+  top: 2em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003209}}
+.log td {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003212}}
+.log tbody {
+  position: absolute;
+  top: 3em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003221}}
+.log:target {
+  height: 23em;
+  left: 1em;
+  right: 1em;
+  margin: 0;
+  padding-bottom: 0.1em;
+  -webkit-transition: height 500ms ease-out;
+  -moz-transition: height 500ms ease-out;
+  -o-transition: height 500ms ease-out;
+  transition: height 500ms ease-out;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003233}}
+.log:target > table {
+  display: table;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003236}}
+.log:target td {
+  display: table-cell;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003240}}
+.log > a:first-child,
+.log:target > a + a {
+  display: block;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003245}}
+.log:target > a,
+.log > a {
+  display: none;
+  text-align: center;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003250}}
+.log tr:nth-child(2n + 0) {
+  background: rgba(64, 64, 64, 0.7);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003254}}
+.log tr:nth-child(2n + 1) {
+  background: rgba(16, 16, 16, 0.7);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003259}}
+.log tbody td:nth-child(4n + 3),
+.log tbody td:nth-child(4n + 2) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003263}}
+.log td {
+  width: 4ex;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003267}}
+.log td[colspan] {
+  width: 8ex;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003271}}
+.log th {
+  width: 10ex;
+  font-weight: normal;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003276}}
+.log .free {
+  width: auto;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003280}}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-width: 0.2em 0 0;
+  text-align: right;
+  padding: 0.25em;
+}
+
+/*CounterFive*/
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003294}}
+.CounterFive > [rel*="count"] {
+  width: 50%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003297}}
+.CounterFive > [rel*="countFive"] {
+  left: auto;
+  right: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003301}}
+[rel="countFiveUp"] {
+  top: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003304}}
+[rel="countFiveDown"] {
+  bottom: 0;
+}
+
+/*/CounterFive*/
+/*Orientation based modifications*/
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003312}}
+.orientation_portrait > .content > .counter,
+.orientation_landscape > .counters_2 > .counter {
+  width: 30%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003316}}
+.orientation_portrait > .counters_2 > .counter {
+  width: 70%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003321}}
+.orientation_portrait > .counters_2 > .counter,
+.orientation_landscape > .content > .counter {
+  display: inline-block;
+  float: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003326}}
+.orientation_landscape > .counters_2 > .counter {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003331}}
+.orientation_portrait > .counters_2 > .counter {
+  position: absolute;
+  top: 0em;
+  bottom: 50%;
+  left: 1em;
+  right: 1em;
+  margin-top: 0.5em;
+  padding-top: 0.75em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003341}}
+.orientation_portrait > .counters_2 > .counter + .counter {
+  top: 50%;
+  bottom: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003346}}
+.orientation_portrait > .counters_2 {
+  position: absolute;
+  top: 1.25em;
+  bottom: 0.5em;
+  left: 0;
+  right: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003355}}
+.orientation_portrait > .counters_2,
+.orientation_landscape > .content {
+  text-align: center;
+}
+
+/* Float clears */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Volumes\/Macintosh\%20Storage\/Users\/mreuring\/Projects\/windgazer\.nl\.workdir\/alivecounter\.workdir\/src\/style\/sass\/base\.scss}line{font-family:\00003361}}
+.content:after,
+header:after {
+  content: ".";
+  display: block;
+  clear: both;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}

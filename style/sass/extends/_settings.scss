@@ -1,0 +1,23 @@
+$c_primary: rgba( 240,240,128 ,1 ); //Primay color, titles, headers, links, etc...
+$c_secondary: rgba( 128,128,128, 1 ); //Secondary, highlights, emphasis, call-to-action...
+$c_text: rgba( 0,0,0 ,1 ); //Main text color.
+$c_text_alt: rgba( 255,255,255 ,1 ); //Alternate text-color, for use on colored backgrounds.
+$c_content: rgba( 0,0,0 ,1 ); //Main content color.
+$c_content_bg: rgba( 255,255,255 ,1 ); //Main content background.
+
+$c_cta: $c_secondary;
+
+$c_body_bg: $c_content_bg;
+
+$c_bg_header: rgba( $c_primary ,0.65 );
+$c_fg_header: $c_content;
+$c_bdr_header: rgba( $c_primary ,0.75 );
+
+$c_bg_menu: transparent;
+$c_fg_menu: darken($c_primary, 10%);
+$c_fg_menu_cta: lighten($c_primary, 10%);
+
+$c_bg_footer: $c_primary;
+$c_fg_footer: $c_text_alt;
+
+$m_whitespace: 1em;
