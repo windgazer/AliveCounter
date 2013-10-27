@@ -1,3 +1,10 @@
+/*
+# Reset
+
+This extension is for resetting basic HTML styling on a selector basis.
+Any object that needs resetting, simply let it `@extend` this fragment
+and it'll be added to the list of objects to revert to base styling.
+*/
 %reset {
 	color: inherit;
 	font-size: 1em;
@@ -9,6 +16,12 @@
 	text-decoration: none;
 }
 
+/*
+# NoCollapse
+
+This extension is for blocking margin-collapse. Any container that needs
+to block margin-collapse can safely `@extend` this fragment.
+*/
 %nocollapse {
 	margin-bottom: -1px;
 	margin-top: -1px;

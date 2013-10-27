@@ -132,6 +132,9 @@ See previous blocks for examples
 
 /*
 # Log
+
+Since styledocco does not support the `:target`-pseudoclass you will have to click it yourself
+to see what it looks like when open :).
 ````
 	<section id="log" class="log">
 		<a href="#log" rel="dialogStart">Log</a><a href="#content" rel="dialogEnd">Close Log</a>
