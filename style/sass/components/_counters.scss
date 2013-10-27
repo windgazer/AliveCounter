@@ -1,0 +1,139 @@
+/*
+# Counter
+
+This is the basic counter construct.
+````
+    <div id="ALCounter1" class="counter">
+        <h3>Player 1</h3>
+        <p>20</p>
+        <a href="#ALCounter1" rel="countUp">+1</a>
+        <a href="#ALCounter1" rel="countDown">-1</a>
+    </div>
+````
+*/
+.counter {
+	font-size: 175%;
+	border-width: 0.2em;
+	border-radius: 0.5em;
+	padding: 0.25em;
+	float: left;
+	margin: 1.15em 0em 0 0.75em;
+	position: relative;
+}
+
+.counter > p {
+	font-size: 175%;
+	text-align: center;
+	margin: 0 0 0.25em;
+}
+
+[rel*="count"] {
+	position: absolute;
+	color: $c_counter_normal;
+	text-align: center;
+	left: 0;
+	width: 100%;
+	padding: 0.5em 0;
+	text-decoration: none;
+	-webkit-transition: color 500ms ease-in-out;
+	-moz-transition: color 500ms ease-in-out;
+	-o-transition: color 500ms ease-in-out;
+	transition: color 500ms ease-in-out;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+[rel*="count"]:hover {
+	color: $c_counter_active;
+}
+[rel="countUp"] {
+	top: 0;
+}
+[rel="countDown"] {
+	bottom: 0;
+}
+
+/*
+# CounterFive
+
+This is a more advanced counter construct, it includes +/- 5 buttons.
+````
+    <div id="ALCounter1" class="counter CounterFive">
+        <h3>Player 1</h3>
+        <p>20</p>
+        <a href="#ALCounter1" rel="countUp">+1</a>
+        <a href="#ALCounter1" rel="countDown">-1</a>
+        <a href="#ALCounter1" rel="countFiveUp">+5</a>
+        <a href="#ALCounter1" rel="countFiveDown">-5</a>
+    </div>
+````
+*/
+
+.CounterFive {
+}
+.CounterFive > [rel*="count"] {
+	width: 50%;
+}
+.CounterFive > [rel*="countFive"] {
+	left: auto;
+	right: 0;
+}
+[rel="countFiveUp"] {
+	top: 0;
+}
+[rel="countFiveDown"] {
+	bottom: 0;
+}
+
+/*
+# Orientation Modules
+
+These are some orientation-based modifications on the counter modules.
+*/
+.orientation_portrait > .content > .counter,
+.orientation_landscape > .counters_2 > .counter {
+	width: 30%;
+}
+
+.orientation_portrait > .counters_2 > .counter {
+	width: 70%;
+}
+
+.orientation_portrait > .counters_2 > .counter,
+.orientation_landscape > .content > .counter {
+	display: inline-block;
+	float: none;
+}
+
+.orientation_landscape > .counters_2 > .counter {
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.orientation_portrait > .counters_2 > .counter {
+	position: absolute;
+	top: 0em;
+	bottom: 50%;
+	left: 1em;
+	right: 1em;
+	margin-top: 0.5em;
+	padding-top: 0.75em;
+}
+
+.orientation_portrait > .counters_2 > .counter + .counter {
+	top: 50%;
+	bottom: 0;
+}
+
+.orientation_portrait > .counters_2 {
+	position: absolute;
+	top: 1.25em;
+	bottom: 0.5em;
+	left: 0;
+	right: 0;
+}
+
+.orientation_portrait > .counters_2,
+.orientation_landscape > .content {
+	text-align: center;
+}
+

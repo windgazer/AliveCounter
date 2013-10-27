@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -19,17 +21,84 @@ module.exports = function(grunt) {
     },
     usemin: {
         html: ['Release/index.html']
+    },
+    rev: {
+        files: {
+            src: ['Release/**/*.js','Release/**/*.css']
+        }
+    },
+    sass: {
+        std: {
+            options: {
+                style: 'compressed'
+            },
+            files: {
+                'style/compiled/base.css':'style/sass/base.scss',
+                'style/compiled/mtg.css':'style/sass/themes/mtg.scss'
+            }
+        },
+        dev: {
+            options: {
+                style: 'expanded',
+                lineNumbers: true,
+                debugInfo: true
+            },
+            files: {
+                'style/compiled/base.css':'style/sass/base.scss',
+                'style/compiled/mtg.css':'style/sass/themes/mtg.scss'
+            }
+        }
+    },
+    compress: {
+        main: {
+            options: {
+                archive: './<%=pkg.name%>-<%=pkg.version%>.zip',
+                mode: 'zip'
+            },
+            files: [
+                { expand: true, src : "**/*", cwd : "Release/" }
+            ]
+        }
+    },
+    imageEmbed: {
+        dist: {
+            src: [ "Release/css/compiled/base.css" ],
+            dest: "Release/css/compiled/base.css",
+            options: {
+                deleteAfterEncoding : true
+            }
+        }
+    },
+    bumpup: {
+        files: ['package.json','bower.json'],
+        options: {
+            normalize: true
+        },
+        setters: {
+            uiv: function (old, releaseType, options) {
+                return (++old).toString();
+            }
+        }
+    },
+    tagrelease: {
+        file: 'package.json',
+        commit:  true,
+        message: 'Release %version%',
+        prefix:  'v',
+        annotate: false,
     }
   });
 
   // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-usemin');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  //grunt.loadNpmTasks('grunt-usemin');
 
   // Default task(s).
-  grunt.registerTask('release', ['copy:release', 'useminPrepare', 'concat', 'uglify', 'usemin','clean:afterRelease']);
+  grunt.registerTask('default', ['sass:dev']);
+  grunt.registerTask('release', ['sass:std','copy:release', 'useminPrepare', 'concat', 'uglify', 'usemin','clean:afterRelease']);
+    grunt.registerTask('tag', function (type) {
+        type = type ? type : 'patch'; // Default release type
+        grunt.task.run('tagrelease'); // Tag
+        grunt.task.run('bumpup:' + type); // Bump up the version
+    });
 
 };

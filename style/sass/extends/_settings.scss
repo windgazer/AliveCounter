@@ -1,0 +1,13 @@
+/*
+# Settings
+
+This file should simply contain the settings for this software.
+*/
+$c_bg_header: rgba( $c_primary ,0.65 );
+$c_fg_header: $c_content;
+$c_bdr_header: rgba( $c_primary ,0.75 );
+
+$c_counter_normal: rgba( $c_text ,0.15 );
+$c_counter_active: rgba( $c_text ,0.35 );
+
+$m_whitespace: 1em;

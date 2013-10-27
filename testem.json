@@ -2,12 +2,20 @@
     "launchers": {
         "CSSLint": {
             "command": "csslint css"
+        },
+        "SASS": {
+        	"command": "grunt sass:dev"
+        },
+        "StyleDocco": {
+        	"command": "styledocco style/sass/"
         }
     },
     "launch_in_dev": [
+        "SASS",
+        "CSSLint",
+        "StyleDocco",
         "PhantomJS",
-        "Chrome",
-        "CSSLint"
+        "Chrome"
     ],
     "src_files": [
         "libs/a5s/rsvp.js",
@@ -22,7 +30,7 @@
         "test/js/**/*.js"
     ],
     "watch_files": [
-        "**/*.css",
+        "style/**/*.scss",
         "lib/**/*.js",
         "test/js/**/*.js"
     ]
