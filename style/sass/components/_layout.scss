@@ -1,0 +1,255 @@
+/*
+# Header
+````
+    <header>
+    	<h1>ALive Counter</h1>
+    	<a rel="dialogStart" href="#options">Options</a>
+    </header>
+````
+*/
+
+header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 0.25em;
+	border-width: 0 0 0.2em;
+	font-size: 175%;
+	z-index: 10;
+}
+
+header > h1 {
+	float: left;
+}
+
+header > [rel="dialogStart"]:before {
+	content: ".";
+	position: absolute;
+	top: 0;
+	right: 0;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	padding: 0.25em 0 0 0.25em;
+	background: white;
+	box-shadow: 0 0.35em 0 rgba( 255, 255, 255, 0.6 ),
+				0 0.7em 0 rgba( 255, 255, 255, 0.3 );
+}
+
+header > [rel="dialogStart"] {
+	float: right;
+	overflow: hidden;
+	text-indent: -10em;
+	width: 1em;
+	height: 1em;
+	position: relative;
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 0.5em 0.5em;
+	margin: 0 0 -0.5em;
+}
+
+.orientation_landscape > header > [rel="dialogStart"] {
+	/*Bigger touch-area for small devices*/
+	padding: 0 0 1em 1em;
+	margin: 0 0 -1em;
+}
+
+/*
+# Menu
+````
+    <menu id="options" style="display:block;">
+   		<li><a href="#content" rel="reset">Reset</a></li>
+    	<p>Here I will add release-notes</p>
+   		<li class="dialogEnd"><a href="#content" rel="dialogEnd">Done</a></li>
+    </menu>
+````
+*/
+
+menu {
+	background: rgba(0, 0, 0, 0.85);
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+	overflow: auto;
+	padding: 0.25em;
+	border-width: 0.2em;
+	border-radius: 0.5em;
+	display: none;
+	z-index: 1;
+}
+
+menu:target {
+	display: block;
+	z-index: 15;
+}
+
+menu  > li {
+	margin: 0.25em;
+	float: left;
+}
+
+menu > li > a {
+	display: inline-block;
+	padding: 0.25em 0.75em;
+}
+
+/*
+# Command links
+
+See previous blocks for examples
+*/
+
+.dialogEnd {
+	position: absolute;
+	bottom: 1em;
+	right: 1em;
+	background: rgba( 127, 127, 255, 0.5 );
+	border-radius: 0.25em;
+	border-width: 0.2em;
+}
+.dialogEnd > a {
+	display: block;
+	padding: 0.25em 0.75em;
+}
+
+/*
+# Content
+````
+    <section id="content" class="content">
+        <p>You should not be able to read this content. If you can, the application is being slow and should soon start loading. If not, please try refreshing the page! If that still does not help, try and gather as much information as you can and then file a bug-report on the github <a href="https://github.com/windgazer/AliveCounter/issues">project page</a>.</p>
+    </section>
+````
+*/
+
+.content {
+	margin: 1.35em 0 2em;
+	position: relative;
+	z-index: 5;
+}
+
+/*
+# Log
+````
+	<section id="log" class="log">
+		<a href="#log" rel="dialogStart">Log</a><a href="#content" rel="dialogEnd">Close Log</a>
+		<section class="body">
+		    <!-- dummy generated content --><table><thead><tr><th></th><td colspan="2">My Life</td><td colspan="2">Player 1</td></tr></thead><tbody><tr><th>21:56:50</th><td>-2</td><td>19</td><td>2</td><td>19</td></tr><tr><th>21:56:46</th><td>-1</td><td>21</td><td>1</td><td>17</td></tr><tr><th>21:56:38</th><td></td><td></td><td>-4</td><td>16</td></tr><tr><th>21:56:30</th><td>2</td><td>22</td><td></td><td></td></tr><tr><th>21:56:23</th><td></td><td></td><td></td><td></td><td class="free">New Game</td></tr><tr><th>21:56:23</th><td></td><td></td><td></td><td></td></tr></tbody></table>
+	    </section>
+	</section>
+````    
+*/
+
+.log {
+	position: fixed;
+	height: 1.5em;
+	bottom: 0;
+	border-width: 0.2em 0.2em 0;
+	border-radius: 0.5em 0.5em 0 0;
+	padding: 0 0.5em;
+	margin: 0 0 0 1em;
+	color: white;
+	z-index: 25;
+}
+
+.log > table {
+	display: none;
+	position: absolute;
+	top: 2em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.log td {
+	display: none;
+}
+.log tbody {
+	position: absolute;
+	top: 3em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+}
+
+.log:target {
+	height: 23em;
+	left: 1em;
+	right: 1em;
+	margin: 0;
+	padding-bottom: 0.1em;
+
+	-webkit-transition: height 500ms ease-out;
+	-moz-transition: height 500ms ease-out;
+	-o-transition: height 500ms ease-out;
+	transition: height 500ms ease-out;
+}
+.log:target > table {
+	display: table;
+}
+.log:target td {
+	display: table-cell;
+}
+.log > a:first-child,
+.log:target > a + a {
+	display: block;
+}
+
+.log:target > a,
+.log > a {
+	display: none;
+	text-align: center;
+}
+
+.log tr:nth-child(2n + 0) {
+	background: rgba( 64, 64, 64, 0.70 );
+}
+
+.log tr:nth-child(2n + 1) {
+	background: rgba( 16, 16, 16, 0.70 );
+}
+
+.log tbody td:nth-child(4n + 3),
+.log tbody td:nth-child(4n + 2) {
+	background: rgba( 255, 255, 255, 0.20 );
+}
+
+.log td {
+	width: 4ex;
+}
+
+.log td[colspan] {
+	width: 8ex;
+}
+
+.log th {
+	width: 10ex;
+	font-weight: normal;
+}
+
+.log .free {
+	width: auto;
+}
+
+/*
+# Footer
+````
+    <footer>
+    	&copy; 2012 Windgazer.nl
+    </footer>
+````
+*/
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-width: 0.2em 0 0;
+	text-align: right;
+	padding: 0.25em;
+}
+
