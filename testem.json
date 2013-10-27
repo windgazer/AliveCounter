@@ -5,11 +5,15 @@
         },
         "SASS": {
         	"command": "grunt sass:dev"
+        },
+        "StyleDocco": {
+        	"command": "styledocco style/sass/"
         }
     },
     "launch_in_dev": [
         "SASS",
         "CSSLint",
+        "StyleDocco",
         "PhantomJS",
         "Chrome"
     ],
