@@ -11,6 +11,7 @@ These are the generic stylings for this project.
 
 html {
 	@extend %reset;
+	height: 100%;
 }
 
 h1, h2, h3, h4, p {
@@ -31,8 +32,9 @@ a {
 
 body {
 	@extend %reset;
-	color: black;
-	background-color: rgba( 32, 32, 32, 1 );
+	background-color: $c_content_bg;
+	color: $c_content;
+	height: 100%;
 	-webkit-transition: font 2s ease-in-out;
 	-moz-transition: font 2s ease-in-out;
 	-o-transition: font 2s ease-in-out;
@@ -149,7 +151,7 @@ See previous blocks for examples
 	position: absolute;
 	bottom: 1em;
 	right: 1em;
-	background: rgba( 127, 127, 255, 0.5 );
+	background: $c_secondary;
 	border-radius: 0.25em;
 	border-width: 0.2em;
 }

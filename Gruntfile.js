@@ -33,7 +33,8 @@ module.exports = function(grunt) {
                 style: 'compressed'
             },
             files: {
-                'style/compiled/base.css':'style/sass/base.scss'
+                'style/compiled/base.css':'style/sass/base.scss',
+                'style/compiled/mtg.css':'style/sass/themes/mtg.scss'
             }
         },
         dev: {
@@ -43,7 +44,8 @@ module.exports = function(grunt) {
                 debugInfo: true
             },
             files: {
-                'style/compiled/base.css':'style/sass/base.scss'
+                'style/compiled/base.css':'style/sass/base.scss',
+                'style/compiled/mtg.css':'style/sass/themes/mtg.scss'
             }
         }
     },
