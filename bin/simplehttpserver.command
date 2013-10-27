@@ -8,4 +8,5 @@
 
 cd "`dirname "$0"`"
 cd ..
+ifconfig en1|grep 'inet '|perl -pe 's/.*?([1-9.]+)+.*/open "http:\/\/$1:8000"/'|sh
 python -m SimpleHTTPServer

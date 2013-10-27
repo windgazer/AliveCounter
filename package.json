@@ -4,10 +4,7 @@
   "version": "0.1.6",
   "dependencies": {},
   "devDependencies": {
-    "jasmine-node": "",
-    "testem": "",
     "csslint": "",
-    "bower": "",
     "grunt-usemin": "~0.1.11",
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
