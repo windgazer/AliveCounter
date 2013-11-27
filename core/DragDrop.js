@@ -23,7 +23,6 @@ var DragDrop = (function(body){
         
         handler = handlers[dragHandle]
 
-//        console.log(dragSource, dragHandle, handler);
         if(dragSource && dragHandle && handler) {
             handle = dragHandle;
             source = dragSource;
@@ -67,8 +66,7 @@ var DragDrop = (function(body){
         ){
             dragTarget = dragTarget.parentNode;
         }
-        
-//        console.log(dragTarget, dragHandle, promise);
+
         if(dragTarget && dragHandle && dragHandle === handle) {
             promise.resolve(dragTarget);
         } else {
@@ -79,19 +77,20 @@ var DragDrop = (function(body){
     function init() {
         DragDropMouseDown = events.attach( body, "mousedown", dragStart );
         DragDropTouchDown = events.attach( body, "touchstart", dragStart );
+        events.attach( body, 'touchstart', function (e) { e.preventDefault(); });
+        events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
     }
 
     function finish() {
         DragDropMouseDown = events.detach( DragDropMouseDown );
         DragDropTouchDown = events.detach( DragDropTouchDown );
     }
+    
+    init();
 
     return DragDrop = {
         addHandler: function(handle, handler) {
             handlers[handle] = handler;
-            if (!DragDropMouseDown) {
-                init();
-            }
         }
     };
 
