@@ -1,8 +1,8 @@
 {
   "name": "AliveCounter",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "index.html",
   "dependencies": {
-    "a5s": "git://github.com/windgazer/app5upport.git#v0.0.8-npm"
+    "a5s": "git://github.com/windgazer/app5upport.git#v0.0.9-npm"
   }
 }
