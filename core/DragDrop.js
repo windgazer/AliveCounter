@@ -75,15 +75,15 @@ var DragDrop = (function(body){
     }
 
     function init() {
-        DragDropMouseDown = events.attach( body, "mousedown", dragStart );
-        DragDropTouchDown = events.attach( body, "touchstart", dragStart );
-        events.attach( body, 'touchstart', function (e) { e.preventDefault(); });
-        events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
+        DragDropMouseDown = Events.attach( body, "mousedown", dragStart );
+        DragDropTouchDown = Events.attach( body, "touchstart", dragStart );
+        Events.attach( body, 'touchstart', function (e) { e.preventDefault(); });
+        Events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
     }
 
     function finish() {
-        DragDropMouseDown = events.detach( DragDropMouseDown );
-        DragDropTouchDown = events.detach( DragDropTouchDown );
+        DragDropMouseDown = Events.detach( DragDropMouseDown );
+        DragDropTouchDown = Events.detach( DragDropTouchDown );
     }
     
     init();
