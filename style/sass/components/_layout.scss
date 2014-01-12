@@ -172,7 +172,8 @@ See previous blocks for examples
 
 .content {
 	@extend %clearFloat;
-	margin: 1.35em 0 2em;
+	margin: 0 0 1.5em;
+	padding: 3.1em 0 0;
 	position: relative;
 	z-index: 5;
 }
