@@ -48,6 +48,7 @@ body {
 	text-shadow: 0 0 0.1em $c_content;
 }
 
-.log:target {
+.log:target,
+.drawerBottomRevealed .log {
 	background: rgba( $c_bg_header ,0.95 );
 }

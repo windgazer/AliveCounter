@@ -226,7 +226,8 @@ to see what it looks like when open :).
 	overflow: auto;
 }
 
-.log:target {
+.log:target,
+.drawerBottomRevealed .log {
 	height: 23em;
 	left: 1em;
 	right: 1em;
@@ -238,19 +239,23 @@ to see what it looks like when open :).
 	-o-transition: height 500ms ease-out;
 	transition: height 500ms ease-out;
 }
-.log:target > table {
+.log:target > table,
+.drawerBottomRevealed .log > table {
 	display: table;
 }
-.log:target td {
+.log:target td,
+.drawerBottomRevealed .log td {
 	display: table-cell;
 }
 .log > a:first-child,
-.log:target > a + a {
+.log:target > a + a,
+.drawerBottomRevealed .log > a + a {
 	display: block;
 }
 
 .log:target > a,
-.log > a {
+.log > a,
+.drawerBottomRevealed .log > a {
 	display: none;
 	text-align: center;
 }
