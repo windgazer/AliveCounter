@@ -51,6 +51,7 @@ var DragDrop = (function(body){
         ;
         
         while (dragSource && !(dragHandle = dragSource.getAttribute("data-dragsource"))){
+            console.log('hunting for dragSource!!');
             dragSource = dragSource.parentNode;
         }
         
@@ -67,8 +68,6 @@ var DragDrop = (function(body){
                 handler(dragSource,dragTarget);
             });
             //Create mouse/touch up handler to fullfill promise
-//            DragDropMouseUp = Events.attach( body, "mouseup", dragStop );
-//            DragDropTouchUp = Events.attach( body, "touchend", dragStop );
             addListener( "PointerUp", dragStop );
             //For Android, must kill touchMove or no touchEnd is fired?!?
             DragDropMove = Events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
@@ -78,8 +77,6 @@ var DragDrop = (function(body){
     }
 
     function dragStop(e) {
-//        DragDropMouseUp = Events.detach(DragDropMouseUp);
-//        DragDropTouchUp = Events.detach(DragDropTouchUp);
         removeListener( "PointerUp", dragStop );
         DragDropMove = Events.detach(DragDropMove);
 
@@ -111,16 +108,12 @@ var DragDrop = (function(body){
     }
 
     function init() {
-//        DragDropMouseDown = Events.attach( body, "mousedown", dragStart );
-//        DragDropTouchDown = Events.attach( body, "touchstart", dragStart );
         addListener( "PointerDown", dragStart );
         Events.attach( body, 'touchstart', function (e) { e.preventDefault(); });
         Events.attach( body, 'touchmove', function (e) { e.preventDefault(); });
     }
 
     function finish() {
-//        DragDropMouseDown = Events.detach( DragDropMouseDown );
-//        DragDropTouchDown = Events.detach( DragDropTouchDown );
         removeListener( "PointerDown", dragStart );
     }
 

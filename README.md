@@ -11,8 +11,9 @@ The following tools are expected to be installed globally:
 - bower, `npm install -g bower`
 - jasmine-node, `npm install -g jasmine-node`
 - testem, `npm install -g testem`
+- styledocco, `npm install -g styledocco`
 
-For copy-pasting pleasure: `npm install -g bower jasmine-node testem`
+For copy-pasting pleasure: `npm install -g bower jasmine-node testem styledocco`
 
 When global installs are (already) done, the following will suffice:
 
