@@ -126,8 +126,7 @@ menu {
 	z-index: 1;
 }
 
-menu:target,
-.drawerTopRevealed #options {
+menu:target {
 	display: block;
 	z-index: 15;
 }
@@ -172,8 +171,7 @@ See previous blocks for examples
 
 .content {
 	@extend %clearFloat;
-	margin: 0 0 1.5em;
-	padding: 3.1em 0 0;
+	margin: 1.35em 0 2em;
 	position: relative;
 	z-index: 5;
 }
@@ -226,8 +224,7 @@ to see what it looks like when open :).
 	overflow: auto;
 }
 
-.log:target,
-.drawerBottomRevealed .log {
+.log:target {
 	height: 23em;
 	left: 1em;
 	right: 1em;
@@ -239,23 +236,19 @@ to see what it looks like when open :).
 	-o-transition: height 500ms ease-out;
 	transition: height 500ms ease-out;
 }
-.log:target > table,
-.drawerBottomRevealed .log > table {
+.log:target > table {
 	display: table;
 }
-.log:target td,
-.drawerBottomRevealed .log td {
+.log:target td {
 	display: table-cell;
 }
 .log > a:first-child,
-.log:target > a + a,
-.drawerBottomRevealed .log > a + a {
+.log:target > a + a {
 	display: block;
 }
 
 .log:target > a,
-.log > a,
-.drawerBottomRevealed .log > a {
+.log > a {
 	display: none;
 	text-align: center;
 }

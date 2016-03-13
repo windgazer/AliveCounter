@@ -113,12 +113,7 @@ var GUIBuilder = ( function( domain ) {
 			history.back(1);
 			return false;
 		} else {
-		    if (a.href) {
-		        document.location.replace( a.href );
-		    } else {
-                document.location.replace( "#" + a.target.id );
-		    }
-		    Interactions.clear();
+			document.location.replace( a.href );
 			startHash = document.location.hash;
 			return false;
 		}
